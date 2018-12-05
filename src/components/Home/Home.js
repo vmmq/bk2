@@ -26,81 +26,113 @@ export default class Home extends Component {
         <Content style={styles.bg} >
         <View style={styles.container} >
         
-       
-
-        <AnimatedCircularProgress
-          size={150}
-          width={15}
-          backgroundWidth={5}
-          fill={100}
-          tintColor="#24588C"
-          backgroundColor="#E6B365"
-          arcSweepAngle={240}
-          rotation={240}
-          lineCap="round"
-          
-        >
-        {(fill) => (
-            <Text style={styles.points2}>
-              100%
-            </Text>
+       <View style={{flexDirection: 'row', flex: 1}}> 
+         <View style={{paddingRight:10}}> 
+          <AnimatedCircularProgress
+            size={150}
+            width={15}
+            backgroundWidth={5}
+            fill={90}
+            tintColor="#24588C"
+            backgroundColor="#E6B365"
+            arcSweepAngle={240}
+            rotation={240}
+            lineCap="round"
             
-          )}
-        </AnimatedCircularProgress>   
-        <Text style={styles.subtext}>
-          Step 1
-        </Text>
+          >
+          {(fill) => (
+              <Text style={styles.points2}>
+                90%
+              </Text>
+              
+            )}
+          </AnimatedCircularProgress>   
+          <Text style={styles.subtext}>
+            Profile
+          </Text>
+         </View>
+
+         <View> 
+          <AnimatedCircularProgress
+            size={150}
+            width={15}
+            backgroundWidth={5}
+            fill={100}
+            tintColor="#24588C"
+            backgroundColor="#E6B365"
+            arcSweepAngle={240}
+            rotation={240}
+            lineCap="round"
+            
+          >
+          {(fill) => (
+              <Text style={styles.points2}>
+                100%
+              </Text>
+              
+            )}
+          </AnimatedCircularProgress>   
+          <Text style={styles.subtext}>
+            Step 1
+          </Text>
+         </View>
+       </View>
+
+       <View style={{flexDirection: 'row', flex: 1}}> 
+         <View style={{paddingRight:10}}> 
+          <AnimatedCircularProgress
+            size={150}
+            width={15}
+            backgroundWidth={5}
+            fill={70}
+            tintColor="#24588C"
+            backgroundColor="#E6B365"
+            arcSweepAngle={240}
+            rotation={240}
+            lineCap="round"
+            
+          >
+          {(fill) => (
+              <Text style={styles.points2}>
+                70%
+              </Text>
+              
+            )}
+          </AnimatedCircularProgress>   
+          <Text style={styles.subtext}>
+            Step 2
+          </Text>
+         </View>
+
+         <View> 
+          <AnimatedCircularProgress
+            size={150}
+            width={15}
+            backgroundWidth={5}
+            fill={10}
+            tintColor="#24588C"
+            backgroundColor="#E6B365"
+            arcSweepAngle={240}
+            rotation={240}
+            lineCap="round"
+            
+          >
+          {(fill) => (
+              <Text style={styles.points2}>
+                10%
+              </Text>
+              
+            )}
+          </AnimatedCircularProgress>   
+          <Text style={styles.subtext}>
+            Step 3
+          </Text>
+         </View>
+       </View> 
+
 
         
-
-         <AnimatedCircularProgress
-          size={150}
-          width={15}
-          backgroundWidth={5}
-          fill={60}
-          tintColor="#24588C"
-          backgroundColor="#E6B365"
-          arcSweepAngle={240}
-          rotation={240}
-          lineCap="round"
-          
-        >
-        {(fill) => (
-            <Text style={styles.points2}>
-              60%
-            </Text>
-            
-          )}
-        </AnimatedCircularProgress>   
-        <Text style={styles.subtext}>
-          Step 2
-        </Text>
-
-
-
-
-    <AnimatedCircularProgress
-          size={150}
-          width={15}
-          backgroundWidth={5}
-          fill={60}
-          tintColor="#24588C"
-          backgroundColor="#E6B365"
-          arcSweepAngle={240}
-          rotation={240}
-          lineCap="round"
-          
-        >
-        {(fill) => (
-            <Text style={styles.points2}>
-              60%
-            </Text>
-            
-          )}
-        </AnimatedCircularProgress>   
-        <Text style={styles.subtext}>
-          Step 3
-        </Text>
+        
 
 
       </View>
