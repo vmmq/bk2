@@ -2,13 +2,66 @@ import React, { Component } from 'react';
 import { Container, Header, Content, Footer, FooterTab, Button, Icon, Text, Badge, Left, Body, Right, Title } from 'native-base';
 import { PanResponder,StyleSheet, TouchableOpacity, View, ActivityIndicator, Alert, Image} from 'react-native';
 import { CircularProgress, AnimatedCircularProgress } from 'react-native-circular-progress';
-
+import styled from "styled-components/native"; // 3.1.6
+import Carousel from 'react-native-snap-carousel'; // 3.6.0
 
 
 
 export default class Home extends Component {
 
+  constructor(props){
+    super();
+    this.state = {
+      errors: []
+    }
+    this.props = props;
+    this._carousel = {};
+    this.init();
+  }
 
+  init(){
+    this.state = {
+      videos: [
+        {
+          id: "WpIAc9by5iU",
+          thumbnail: "https://images.unsplash.com/photo-1456406644174-8ddd4cd52a06?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60",
+          title: "Noticia 1"
+        }, {
+          id: "sNPnbI1arSE",
+          thumbnail: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60",
+          title: "Noticia 2"
+        }, {
+          id: "VOgFZfRVaww",
+          thumbnail: "https://images.unsplash.com/photo-1533854775446-95c4609da544?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60",
+          title: "Noticia 3"
+        }
+      ]
+    };
+
+    console.log("ThumbnailCarousel Props: ", this.props)
+  }
+
+  handleSnapToItem(index){
+    console.log("snapped to ", index)
+  }
+
+  _renderItem = ( {item, index} ) => {
+    console.log("rendering,", index, item)
+    return (
+        <ThumbnailBackgroundView>
+          <CurrentVideoTO
+             onPress={ () => { 
+                console.log("clicked to index", index)
+                this._carousel.snapToItem(index);
+              }}
+          >
+            <CurrentVideoImage source={{ uri: item.thumbnail }} />
+          </CurrentVideoTO>
+            {/*<NextVideoImage source={{ uri: this.state.currentVideo.nextVideoId }}/>*/}
+            <VideoTitleText>{item.title}</VideoTitleText>
+        </ThumbnailBackgroundView>
+    );
+  }
 
 
   render() {
@@ -25,6 +78,21 @@ export default class Home extends Component {
 
         <Content style={styles.bg} >
         <View style={styles.container} >
+        
+
+        <CarouselBackgroundView>
+        <Carousel
+          ref={ (c) => { this._carousel = c; } }
+          data={this.state.videos}
+          renderItem={this._renderItem.bind(this)}
+          onSnapToItem={this.handleSnapToItem.bind(this)}
+          sliderWidth={360}
+          itemWidth={256}
+          layout={'default'}
+          firstItem={0}
+        />
+      </CarouselBackgroundView>
+
         
        <View style={{flexDirection: 'row', flex: 1}}> 
          <View style={{paddingRight:10}}> 
@@ -216,3 +284,33 @@ const styles = StyleSheet.create({
   }
 });
 
+
+
+
+const VideoTitleText = styled.Text`
+  color: white;
+  top: -20;
+  fontSize:20;
+  
+`
+const CurrentVideoImage = styled.Image`
+  top: 10;
+  box-shadow: 5px 10px;
+  width: 256;
+  height: 144;
+  border-radius: 5;
+`;
+
+const ThumbnailBackgroundView = styled.View`
+  justify-content: center;
+  align-items: center;
+  width: 256; 
+`;
+
+const CurrentVideoTO = styled.TouchableOpacity`
+`
+const CarouselBackgroundView = styled.View`
+  background-color: white;
+  height: 180;
+  width: 100%;
+`
