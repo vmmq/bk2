@@ -7,37 +7,70 @@
  */
 
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View} from 'react-native';
+import {AsyncStorage, StyleSheet, ActivityIndicator, View} from 'react-native';
 import Splash from './src/components/Splash/Splash';
 import Login from './src/components/Login/Login';
 import Home from './src/components/Home/Home';
-import Carousel from 'react-native-snap-carousel';
+import Todo from './src/components/Todo/Todo';
+import TodoDetail from './src/components/TodoDetail/TodoDetail';
 
-const instructions = Platform.select({
-  ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
-  android:
-    'Double tap R on your keyboard to reload,\n' +
-    'Shake or press menu button for dev menu',
-});
+import {Router, Scene} from 'react-native-router-flux';
+
+
 
 
 export default class App extends Component {
+  constructor() {
+    super();
+    this.state = { hasToken: false };
+  }
+  componentDidMount() {
+    AsyncStorage.getItem('id_token').then((token) => {
+      this.setState({ hasToken: token !== null, isLoaded: true })
+    });
+  }
 
-  _renderItem ({item, index}) {
-    return (
-        <View style={styles.slide}>
-            <Text style={styles.title}>{ item.title }</Text>
-        </View>
-    );
-}
+
 
   render() {
-    return (
-      //<Splash />
-      //<Login />
-      <Home />
-    );
+    if (!this.state.isLoaded) {
+      return (
+        <ActivityIndicator />
+      )
+    } else { 
+      return (
+      
+
+      <Router>
+        <Scene key='root' duration={0} gesturesEnabled={false}>
+          <Scene
+            component={Login}
+            hideNavBar={true}
+            initial={!this.state.hasToken}
+            key='Login'
+            renderBackButton={()=>(null)}
+
+          />
+          <Scene
+            component={Home}
+            title='Home Page'
+            key='Home'
+            hideNavBar={true}
+            initial={this.state.hasToken}
+          />
+          <Scene 
+            component={Todo}
+            title='To-Do List'
+            key='Todo'
+            hideNavBar={true}
+          />
+          </Scene>
+          
+          
+      </Router>
+    ); 
   }
+}
 }
 
 const styles = StyleSheet.create({

@@ -1,28 +1,90 @@
 import React, {Component} from 'react';
-import {Platform, StyleSheet, View, Text, Image, TextInput, TouchableOpacity} from 'react-native';
+import {AsyncStorage, Platform, StyleSheet, View, Text, Image, TextInput, TouchableOpacity, ActivityIndicator, Alert, Keyboard} from 'react-native';
+import {Actions} from 'react-native-router-flux';
+
+
+
 
  export default class LoginForm extends Component {
+    constructor() {
+        super();
+        this.state = { username: null, password: null };
+    }
+
+    async saveItem(item, selectedValue) {
+        try {
+          await AsyncStorage.setItem(item, selectedValue);
+        } catch (error) {
+          console.error('AsyncStorage error: ' + error.message);
+        }
+    }
+
+
+    userLogin() {
+        Keyboard.dismiss;
+        fetch('https://reqres.in/api/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                "email": this.state.username,
+                "password": this.state.password    
+            }) 
+        })    
+        
+        .then((response) => response.json())
+        .then((responseJson) => {
+       
+            if(responseJson.token) {
+                Actions.Home();
+                this.saveItem('id_token', responseJson.token);
+                //Alert.alert("Token:  " + responseJson.token);
+            } else {
+                Alert.alert("The username or password you entered is incorrect");
+            }        
+        })
+        .catch((error) => {
+            console.error(error);
+        }); 
+      }
+
+      
+
      render(){
          return(
              <View style={styles.container} >
                 <TextInput 
-                    placeholder='Email' style={styles.input} 
+                    placeholder='Email' 
+                    style={styles.input} 
                     returnKeyType='next'
                     onSubmitEditing = {()=>this.passwordInput.focus()}
                     keyboardType='email-address'
                     autoCapitalize='none'
                     autoCorrect={false}
 
+                    onChangeText={(username) => this.setState({username})}
+                
+                    ref='username'
+            
+                    value={this.state.username}
+
                 />
                 <TextInput 
-                    placeholder='Password' style={styles.input} 
+                    placeholder='Password' 
+                    style={styles.input} 
                     returnKeyType='go'
                     secureTextEntry
                     ref={(input)=>this.passwordInput = input}
+                    onChangeText={(password) => this.setState({password})}
+                    value={this.state.password}
+
  
                 />
+
                 
-                <TouchableOpacity style={styles.buttonContainer} >
+                
+                <TouchableOpacity style={styles.buttonContainer} onPress={this.userLogin.bind(this)} >
                     <Text style={styles.button}  >LOGIN</Text>
                 </TouchableOpacity>
 
@@ -45,7 +107,6 @@ import {Platform, StyleSheet, View, Text, Image, TextInput, TouchableOpacity} fr
     button:{
         textAlign:'center',
         color:'#FFF',
-        overflow:"hidden",
         borderRadius: 20,
         
         

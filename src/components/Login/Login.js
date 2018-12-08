@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Platform, StyleSheet, View, Text, Image, KeyboardAvoidingView} from 'react-native';
+import { StyleSheet, View, Text, Image, KeyboardAvoidingView} from 'react-native';
 import LoginForm from './LoginForm';
 
 
@@ -11,7 +11,7 @@ import LoginForm from './LoginForm';
                 <View style={styles.logoContainer} >
                 
 
-                    <Image source={require('../../images/Background.png')} />
+                    <Image source={require('../../images/BackgroundNEW.png')} />
                     
                 </View>
 
