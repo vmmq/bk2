@@ -6,6 +6,7 @@ import styled from "styled-components/native";
 import Carousel from 'react-native-snap-carousel'; 
 import {Actions} from 'react-native-router-flux';
 import Spinner from 'react-native-loading-spinner-overlay';
+import Slider from './Slider.js';
 
 
 const API = 'https://app.bekdos.etv.im/api/';
@@ -23,6 +24,8 @@ export default class Home extends Component {
     };
   }
 
+  
+
   async userLogout() {
     try {
       await AsyncStorage.removeItem('id_token');
@@ -35,6 +38,7 @@ export default class Home extends Component {
       console.log('AsyncStorage error: ' + error.message);
     }
   }
+  
 
   goTodo() {
     Actions.Todo();  
@@ -126,8 +130,10 @@ export default class Home extends Component {
           
           <Content style={styles.bg} >
             <View style={styles.container} >
-
-            <View style={{flexDirection: 'row', flex: 1}}> 
+            <Title>News</Title>
+            <Slider></Slider>
+            <Title>Dashboard</Title>
+            <View style={{flexDirection: 'row', flex: 1, marginTop:10}}> 
               
               <View style={{paddingRight:10}}> 
                 <AnimatedCircularProgress

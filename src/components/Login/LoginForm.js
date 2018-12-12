@@ -67,7 +67,7 @@ import {RkButton} from 'react-native-ui-kitten';
                     keyboardType='email-address'
                     autoCapitalize='none'
                     autoCorrect={false}
-
+                    placeholderTextColor='#5d5d5d'
                     onChangeText={(username) => this.setState({username})}
                 
                     ref='username'
@@ -83,6 +83,7 @@ import {RkButton} from 'react-native-ui-kitten';
                     ref={(input)=>this.passwordInput = input}
                     onChangeText={(password) => this.setState({password})}
                     value={this.state.password}
+                    placeholderTextColor='#5d5d5d'
 
  
                 />
@@ -132,12 +133,14 @@ import {RkButton} from 'react-native-ui-kitten';
 
     input: {
         height:40,
-        backgroundColor: 'rgba(255,255,255,0.8)',
+        backgroundColor: 'rgba(255,255,255,1)',
         borderColor:'#E6B365',
         borderRadius: 20,
         borderWidth:1,
         marginBottom:20,
-        paddingHorizontal:10
+        paddingHorizontal:10,
+     
+        
         
         
       },
