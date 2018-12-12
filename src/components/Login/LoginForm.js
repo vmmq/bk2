@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 import {AsyncStorage, Platform, StyleSheet, View, Text, Image, TextInput, TouchableOpacity, ActivityIndicator, Alert, Keyboard} from 'react-native';
 import {Actions} from 'react-native-router-flux';
-
+import {  Button } from 'native-base';
+import {RkButton} from 'react-native-ui-kitten';
 
 
 
@@ -22,13 +23,13 @@ import {Actions} from 'react-native-router-flux';
 
     userLogin() {
         Keyboard.dismiss;
-        fetch('https://reqres.in/api/login', {
+        fetch('https://app.bekdos.etv.im/api/login/', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                "email": this.state.username,
+                "id": this.state.username,
                 "password": this.state.password    
             }) 
         })    
@@ -37,8 +38,12 @@ import {Actions} from 'react-native-router-flux';
         .then((responseJson) => {
        
             if(responseJson.token) {
-                Actions.Home();
+                
                 this.saveItem('id_token', responseJson.token);
+                this.saveItem('id_number', responseJson.id_number);
+                this.saveItem('email', responseJson.email);
+                this.saveItem('user_role', responseJson.user_role);
+                Actions.Home();
                 //Alert.alert("Token:  " + responseJson.token);
             } else {
                 Alert.alert("The username or password you entered is incorrect");
@@ -55,7 +60,7 @@ import {Actions} from 'react-native-router-flux';
          return(
              <View style={styles.container} >
                 <TextInput 
-                    placeholder='Email' 
+                    placeholder='ID number' 
                     style={styles.input} 
                     returnKeyType='next'
                     onSubmitEditing = {()=>this.passwordInput.focus()}
@@ -84,9 +89,16 @@ import {Actions} from 'react-native-router-flux';
 
                 
                 
-                <TouchableOpacity style={styles.buttonContainer} onPress={this.userLogin.bind(this)} >
-                    <Text style={styles.button}  >LOGIN</Text>
+                <TouchableOpacity style={styles.buttonContainer}  >
+                   
+                <RkButton
+                    onPress={this.userLogin.bind(this)}
+                    style={styles.button}
+                    contentStyle={styles.buttonIn}>
+                    Login
+                </RkButton>
                 </TouchableOpacity>
+                
 
              </View>
              
@@ -105,16 +117,16 @@ import {Actions} from 'react-native-router-flux';
       
     },
     button:{
-        textAlign:'center',
-        color:'#FFF',
+        backgroundColor: '#df951c',    
+        height:40,
         borderRadius: 20,
+        marginBottom:20,
+        width: '100%',
         
-        
-
     },
     buttonContainer:{
-        backgroundColor: '#24588C',
-        paddingVertical: 15
+        justifyContent:'center',
+        alignItems:'center',
         
     },
 

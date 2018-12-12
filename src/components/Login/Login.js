@@ -29,7 +29,7 @@ import LoginForm from './LoginForm';
  const styles = StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: '#F1F2F5',
+      backgroundColor: '#2b65a6',
     },
     logoContainer: {
 
