@@ -1,131 +1,210 @@
 import React, { Component } from 'react';
 import { Container, Header, Content, Footer, FooterTab, Button, Icon, Text, Left, Body, Right, Title } from 'native-base';
-import { StyleSheet, View} from 'react-native';
+import { AsyncStorage, Alert, Linking, StyleSheet, View, SectionList} from 'react-native';
+import {Actions} from 'react-native-router-flux';
+import Spinner from 'react-native-loading-spinner-overlay';
 import { List, ListItem } from 'react-native-elements'
 import * as Progress from 'react-native-progress';
-import {Actions} from 'react-native-router-flux';
 
-const list = [
-  {
-    name: 'Documento 1',
-    
-    subtitle: 'Descripcion'
-  },
-  {
-    name: 'Documento 2',
-   
-    subtitle: 'Descripcion'
-  },
-  {
-    name: 'Documento 3',
-   
-    subtitle: 'Descripcion'
-  },
-  {
-    name: 'Documento 4',
-   
-    subtitle: 'Descripcion'
-  },
-  
-]  
+
+
+const API = 'https://app.bekdos.etv.im/api/';
+const DEFAULT_QUERY = 'todo/';
+
 
 
 export default class Todo extends Component {
+  constructor(props) {
+    super(props);
 
-
+    this.state = {
+      valores: {step1:{},step2:{},step3:{}},
+      isLoading: false,
+    };
+  }
   goHome() {
     Actions.Home();
   }
+  
+
+  componentDidMount = async () => {
+    this.setState({ isLoading: true });
+    token = await AsyncStorage.getItem('id_token');
+    fetch(API + DEFAULT_QUERY,{
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            "token": token
+        }) 
+    }) 
+      .then(response => response.json())
+      .then(data => this.setState({ valores: data, isLoading: false }));  
+      
+  }
+
+   PrintStep1() {
+    const { valores, isLoading } = this.state;
+    var lista = [];
+    if(valores.step1){
+        for (let index = 0; index < valores.step1.length; index++) {
+          const element = valores.step1[index];
+
+          if (element.name) {
+            lista.push(<ListItem key={element.name} title={element.name} />);
+          }
+        }  
+        return lista
+    }
+  }
+  PrintStep2() {
+    const { valores, isLoading } = this.state;
+    var lista = [];
+    if(valores.step2){
+        for (let index = 0; index < valores.step2.length; index++) {
+          const element = valores.step2[index];
+
+          if (element.name) {
+            lista.push(<ListItem key={element.name} title={element.name} />);
+          }
+        }  
+        return lista
+    }
+  }
+  PrintStep3() {
+    const { valores, isLoading } = this.state;
+    var lista = [];
+    if(valores.step3){
+        for (let index = 0; index < valores.step3.length; index++) {
+          const element = valores.step3[index];
+
+          if (element.name) {
+            lista.push(<ListItem key={element.name} title={element.name} />);
+          }
+        }  
+        return lista
+    }
+  }
 
   render() {
+    const { valores, isLoading } = this.state;
+    const list = valores.step1;
+    spiner=true
+    
+    if(valores.error){
+      this.userLogout();
+      return <Text>Sesion iniciada en otro dispositivo</Text>;
+    }
+
+    if (isLoading) {
+      return <Container>
+        <Header style={styles.header}>
+            <Left/>
+            <Body>
+              <Title style={styles.white} >To-do List</Title>
+            </Body>
+            <Right />
+          </Header>
+          <Content>     
+            <View style={styles.container}>
+              <Spinner
+                visible={spiner}
+                textContent={''}
+                textStyle={styles.spinnerTextStyle}
+              />
+        
+            </View>
+          </Content>
+          <Footer >
+            <FooterTab style={styles.footer}>
+            <Button  vertical onPress={this.goHome.bind(this)}>
+                <Icon style={styles.white} name="apps"  />
+                <Text style={styles.white} >Home</Text>
+              </Button>
+              <Button active vertical style={styles.selected}  > 
+                <Icon style={styles.white} name="list" />
+                <Text style={styles.white} >To-Do</Text>
+              </Button>
+              <Button  vertical >
+                <Icon style={styles.white} active name="book" />
+                <Text style={styles.white}>Classrom</Text>
+              </Button>
+              <Button vertical  >
+                <Icon style={styles.white} name="person" />
+                <Text style={styles.white} >Profile</Text>
+              </Button>
+            </FooterTab>
+          </Footer>
+        
+      </Container>;
+       
+
+    }
+
+    
+
     return (
       <Container>
-
-       <Header>
-          <Left/>
-          <Body>
-            <Title>To-Do List</Title>
-          </Body>
-          <Right />
+        <Header style={styles.header}>
+            <Left/>
+            <Body>
+              <Title style={styles.white} >To-do List</Title>
+            </Body>
+            <Right />
         </Header>
-        <Content>
-      
+        <Content>     
         <Text style={styles.subtext} >Step 1</Text>
         <View style={styles.container} >
         <Progress.Bar progress={0.3} width={200} style={styles.progress} />
         </View>
         <List containerStyle={{marginBottom: 20}}>
-          {
-            list.map((l) => (
-              <ListItem
-                key={l.name}
-                title={l.name}
-              />
-            ))
-          }
+          {this.PrintStep1()}
         </List>
-
 
         <Text style={styles.subtext} >Step 2</Text>
         <View style={styles.container} >
         <Progress.Bar progress={0.3} width={200} style={styles.progress} />
         </View>
         <List containerStyle={{marginBottom: 20}}>
-          {
-            list.map((l) => (
-              <ListItem
-                key={l.name}
-                title={l.name}
-              />
-            ))
-          }
+          {this.PrintStep2()}
         </List>
-
 
         <Text style={styles.subtext} >Step 3</Text>
         <View style={styles.container} >
-          <Progress.Bar progress={0.3} width={200} style={styles.progress} />
+        <Progress.Bar progress={0.3} width={200} style={styles.progress} />
         </View>
         <List containerStyle={{marginBottom: 20}}>
-          {
-            list.map((l) => (
-              <ListItem
-                key={l.name}
-                title={l.name}
-              />
-            ))
-          }
+          {this.PrintStep3()}
         </List>
-
-  
+            
         </Content>
-
-
-        <Footer>
-          <FooterTab>
+        <Footer >
+            <FooterTab style={styles.footer}>
             <Button  vertical onPress={this.goHome.bind(this)}>
-              <Icon name="apps" />
-              <Text>Home</Text>
-            </Button>
-            <Button active vertical>
-              <Icon name="list" />
-              <Text>To-Do</Text>
-            </Button>
-            <Button  vertical >
-              <Icon active name="book" />
-              <Text>Classrom</Text>
-            </Button>
-            <Button vertical  >
-              <Icon name="person" />
-              <Text>Profile</Text>
-            </Button>
-          </FooterTab>
-        </Footer>
+                <Icon style={styles.white} name="apps"  />
+                <Text style={styles.white} >Home</Text>
+              </Button>
+              <Button active vertical style={styles.selected}  > 
+                <Icon style={styles.white} name="list" />
+                <Text style={styles.white} >To-Do</Text>
+              </Button>
+              <Button  vertical >
+                <Icon style={styles.white} active name="book" />
+                <Text style={styles.white}>Classrom</Text>
+              </Button>
+              <Button vertical  >
+                <Icon style={styles.white} name="person" />
+                <Text style={styles.white} >Profile</Text>
+              </Button>
+            </FooterTab>
+          </Footer>
       </Container>
+
+     
     );
   }
 }
-
 
 
 const styles = StyleSheet.create({
@@ -156,16 +235,24 @@ const styles = StyleSheet.create({
     padding:0,
     
   },
-  pointsDelta: {
-    color: '#4c6479',
-    fontSize: 50,
-    fontWeight: "100"
-  },
-  pointsDeltaActive: {
-    color: '#fff',
-  },
   bg: {
     backgroundColor: '#FFF',
-  }
-});
+  },
+  header: {
+    backgroundColor: '#2b65a6',
+  },
+  footer: {
+    backgroundColor: '#2b65a6',
+  },
 
+  white: {
+    color:'#FFF', 
+  },
+  selected: {
+    backgroundColor: '#df951c',
+  }
+  
+  
+
+
+});

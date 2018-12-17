@@ -87,7 +87,7 @@ export default class Home extends Component {
             <View style={styles.container}>
               <Spinner
                 visible={spiner}
-                textContent={'Loading...'}
+                textContent={''}
                 textStyle={styles.spinnerTextStyle}
               />
         
@@ -130,7 +130,7 @@ export default class Home extends Component {
           
           <Content style={styles.bg} >
             <View style={styles.container} >
-            <Title>News</Title>
+            <Title>News & Info</Title>
             <Slider></Slider>
             <Title>Dashboard</Title>
             <View style={{flexDirection: 'row', flex: 1, marginTop:10}}> 
@@ -234,8 +234,6 @@ export default class Home extends Component {
 }
 const styles = StyleSheet.create({
  
-
-
   porcentaje: {
     backgroundColor: 'transparent',
     position: 'absolute',
