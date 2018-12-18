@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import {AppRegistry,StyleSheet,Text,Image,TouchableOpacity,View} from 'react-native';
 import Scanner from 'react-native-document-scanner';
 import { Container, Header, Content, Footer, FooterTab, Button, Icon, Left, Body, Right, Title } from 'native-base';
+import {Actions} from 'react-native-router-flux';
+
 export default class Scan extends Component {
   constructor(props) {
     super(props);
@@ -13,7 +15,9 @@ export default class Scan extends Component {
   }
 
 
-
+  goTodo() {
+    Actions.Todo();  
+  }
   renderWait() {
     if(!this.state.stableCounter ){
 
@@ -28,9 +32,11 @@ export default class Scan extends Component {
     return (
       <Container>
         <Header style={styles.header}>
-          <Left/>
+            <Button transparent onPress={this.goTodo.bind(this)} >
+              <Icon name='arrow-back' />
+            </Button>
           <Body>
-            <Title style={styles.white} >Scan</Title>
+            <Title style={styles.white} >Scan {this.props.title}</Title>
           </Body>
           <Right />
         </Header> 
@@ -45,8 +51,6 @@ export default class Scan extends Component {
             enableTorch={this.state.flashEnabled}
             useFrontCam={this.state.useFrontCam}
             brightness={0}
-          
-         
             quality={0.1}
             onRectangleDetect={({ stableCounter, lastDetectionType }) => this.setState({ stableCounter, lastDetectionType })}
             detectionCountBeforeCapture={6}

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Container, Header, Content, Footer, FooterTab, Button, Icon, Text, Left, Body, Right, Title } from 'native-base';
-import { AsyncStorage, Alert, Linking, StyleSheet, View, SectionList} from 'react-native';
+import { AsyncStorage, Alert, Linking, StyleSheet, View, TouchableOpacity} from 'react-native';
 import {Actions} from 'react-native-router-flux';
 import Spinner from 'react-native-loading-spinner-overlay';
 import { List, ListItem } from 'react-native-elements'
@@ -14,16 +14,22 @@ const DEFAULT_QUERY = 'todo/';
 
 
 export default class Todo extends Component {
+  respuesta = 'holaaaa';
   constructor(props) {
     super(props);
+    this.goScan = this.goScan.bind(this);
 
     this.state = {
       valores: {step1:{},step2:{},step3:{}},
       isLoading: false,
+      pagina: "",
     };
   }
   goHome() {
     Actions.Home();
+  }
+  goScan(element) {
+    Actions.Scan({name: element.name, title: element.title});
   }
   
 
@@ -52,7 +58,17 @@ export default class Todo extends Component {
           const element = valores.step1[index];
 
           if (element.name) {
-            lista.push(<ListItem key={element.name} title={element.name} />);
+            lista.push( 
+                        <TouchableOpacity key={element.name} onPress={() => this.goScan(element)}> 
+                        <ListItem roundAvatar
+                        avatar={require('../../images/logo.png')}
+                        
+                        title={element.title} 
+                        
+                        >
+                        </ListItem>
+                        </TouchableOpacity>
+                      );
           }
         }  
         return lista
@@ -66,7 +82,17 @@ export default class Todo extends Component {
           const element = valores.step2[index];
 
           if (element.name) {
-            lista.push(<ListItem key={element.name} title={element.name} />);
+            lista.push( 
+              <TouchableOpacity key={element.name} onPress={() => this.goScan(element)}> 
+              <ListItem roundAvatar
+              avatar={require('../../images/logo.png')}
+              
+              title={element.title} 
+              
+              >
+              </ListItem>
+              </TouchableOpacity>
+            );
           }
         }  
         return lista
@@ -80,7 +106,17 @@ export default class Todo extends Component {
           const element = valores.step3[index];
 
           if (element.name) {
-            lista.push(<ListItem key={element.name} title={element.name} />);
+            lista.push( 
+              <TouchableOpacity key={element.name} onPress={() => this.goScan(element)}> 
+              <ListItem roundAvatar
+              avatar={require('../../images/logo.png')}
+              
+              title={element.title} 
+              
+              >
+              </ListItem>
+              </TouchableOpacity>
+            );
           }
         }  
         return lista
@@ -156,7 +192,7 @@ export default class Todo extends Component {
         <Content>     
         <Text style={styles.subtext} >Step 1</Text>
         <View style={styles.container} >
-        <Progress.Bar progress={0.3} width={200} style={styles.progress} />
+        <Progress.Bar progress={valores.completed_1} width={200} style={styles.progress} />
         </View>
         <List containerStyle={{marginBottom: 20}}>
           {this.PrintStep1()}
@@ -164,7 +200,7 @@ export default class Todo extends Component {
 
         <Text style={styles.subtext} >Step 2</Text>
         <View style={styles.container} >
-        <Progress.Bar progress={0.3} width={200} style={styles.progress} />
+        <Progress.Bar progress={valores.completed_2} width={200} style={styles.progress} />
         </View>
         <List containerStyle={{marginBottom: 20}}>
           {this.PrintStep2()}
@@ -172,7 +208,7 @@ export default class Todo extends Component {
 
         <Text style={styles.subtext} >Step 3</Text>
         <View style={styles.container} >
-        <Progress.Bar progress={0.3} width={200} style={styles.progress} />
+        <Progress.Bar progress={valores.completed_3} width={200} style={styles.progress} />
         </View>
         <List containerStyle={{marginBottom: 20}}>
           {this.PrintStep3()}

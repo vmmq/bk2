@@ -12,6 +12,7 @@ import Splash from './src/components/Splash/Splash';
 import Login from './src/components/Login/Login';
 import Home from './src/components/Home/Home';
 import Todo from './src/components/Todo/Todo';
+import Scan from './src/components/Todo/Scan';
 import TodoDetail from './src/components/TodoDetail/TodoDetail';
 
 import {Router, Scene} from 'react-native-router-flux';
@@ -62,6 +63,13 @@ export default class App extends Component {
             component={Todo}
             title='To-Do List'
             key='Todo'
+            hideNavBar={true}
+          />
+          
+          <Scene 
+            component={Scan}
+            title='Scan'
+            key='Scan'
             hideNavBar={true}
           />
           </Scene>
