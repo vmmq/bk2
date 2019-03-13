@@ -13,6 +13,10 @@ import Login from './src/components/Login/Login';
 import Home from './src/components/Home/Home';
 import Todo from './src/components/Todo/Todo';
 import Scan from './src/components/Todo/Scan';
+import Profile from './src/components/Profile/Profile';
+import Faqs from './src/components/Profile/Faqs';
+import Support from './src/components/Profile/Support';
+import Classroom from './src/components/Classroom/Classroom';
 import TodoDetail from './src/components/TodoDetail/TodoDetail';
 
 import {Router, Scene} from 'react-native-router-flux';
@@ -72,7 +76,34 @@ export default class App extends Component {
             key='Scan'
             hideNavBar={true}
           />
+
+          <Scene 
+            component={Classroom}
+            title='Classroom'
+            key='Classroom'
+            hideNavBar={true}
+          />
+
+          <Scene 
+            component={Profile}
+            title='Profile'
+            key='Profile'
+            hideNavBar={true}
+          />
+          <Scene 
+            component={Faqs}
+            title='Faqs'
+            key='Faqs'
+            hideNavBar={true}
+          />
+          <Scene 
+            component={Support}
+            title='Support'
+            key='Support'
+            hideNavBar={true}
+          />
           </Scene>
+          
           
           
       </Router>

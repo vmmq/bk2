@@ -6,7 +6,8 @@ import styled from "styled-components/native";
 import Carousel from 'react-native-snap-carousel'; 
 import {Actions} from 'react-native-router-flux';
 import Spinner from 'react-native-loading-spinner-overlay';
-import Slider from './Slider.js';
+import Slider from './Slider';
+import Menu from '../Menu/Menu';
 
 
 const API = 'https://app.bekdos.etv.im/api/';
@@ -43,6 +44,15 @@ export default class Home extends Component {
   goTodo() {
     Actions.Todo();  
   }
+  goProfile() {
+    Actions.Profile();  
+  }
+  goClassroom() {
+    Actions.Classroom();  
+  }
+  goHome() {
+    Actions.Home();  
+  }
 
 
 
@@ -59,7 +69,8 @@ export default class Home extends Component {
         }) 
     }) 
       .then(response => response.json())
-      .then(data => this.setState({ valores: data, isLoading: false }));  
+      .then(data => this.setState({ valores: data, isLoading: false })) 
+      .catch( err => this.setState({isLoading: false }));
       
   }
 
@@ -90,28 +101,10 @@ export default class Home extends Component {
                 textContent={''}
                 textStyle={styles.spinnerTextStyle}
               />
-        
             </View>
           </Content>
           <Footer >
-            <FooterTab style={styles.footer}>
-              <Button active vertical style={styles.selected}>
-                <Icon style={styles.white} name="apps" />
-                <Text style={styles.white} >Home</Text>
-              </Button>
-              <Button vertical onPress={this.goTodo.bind(this)} > 
-                <Icon style={styles.white} name="list" />
-                <Text style={styles.white} >To-Do</Text>
-              </Button>
-              <Button  vertical >
-                <Icon style={styles.white} active name="book" />
-                <Text style={styles.white}>Classrom</Text>
-              </Button>
-              <Button vertical  onPress={this.userLogout.bind(this)}>
-                <Icon style={styles.white} name="person" />
-                <Text style={styles.white} >Profile</Text>
-              </Button>
-            </FooterTab>
+            <Menu selected={"Home"} ></Menu>
           </Footer>
       </Container>;
        
@@ -130,8 +123,8 @@ export default class Home extends Component {
           
           <Content style={styles.bg} >
             <View style={styles.container} >
-            <Title>News & Info</Title>
-            <Slider></Slider>
+            
+            
             <Title>Dashboard</Title>
             <View style={{flexDirection: 'row', flex: 1, marginTop:10}}> 
               
@@ -183,7 +176,7 @@ export default class Home extends Component {
                   lineCap="round" >
                   {(fill) => ( <Text style={styles.porcentaje}> { valores.step2 }% </Text> )}
                 </AnimatedCircularProgress>   
-                <Text style={styles.subtext}> Step 2 </Text>
+                <Text style={styles.subtext} onPress={this.goTodo.bind(this)}> Step 2 </Text>
               </View>
 
               <View> 
@@ -199,32 +192,17 @@ export default class Home extends Component {
                   lineCap="round" >
                   {(fill) => ( <Text style={styles.porcentaje}> { valores.step3 }% </Text> )}
                 </AnimatedCircularProgress>   
-                <Text style={styles.subtext}> Step 3 </Text>
+                <Text style={styles.subtext} onPress={this.goTodo.bind(this)} > Step 3 </Text>
               </View>
             </View> 
+            <Title>News & Info</Title>
+            <Slider></Slider>
             </View>
           </Content>
 
 
           <Footer >
-            <FooterTab style={styles.footer}>
-              <Button active vertical style={styles.selected}>
-                <Icon style={styles.white} name="apps" />
-                <Text style={styles.white} >Home</Text>
-              </Button>
-              <Button vertical onPress={this.goTodo.bind(this)} > 
-                <Icon style={styles.white} name="list" />
-                <Text style={styles.white} >To-Do</Text>
-              </Button>
-              <Button  vertical >
-                <Icon style={styles.white} active name="book" />
-                <Text style={styles.white}>Classrom</Text>
-              </Button>
-              <Button vertical  onPress={this.userLogout.bind(this)}>
-                <Icon style={styles.white} name="person" />
-                <Text style={styles.white} >Profile</Text>
-              </Button>
-            </FooterTab>
+            <Menu selected={"Home"}></Menu>
           </Footer>
         </Container>
 
@@ -246,7 +224,6 @@ const styles = StyleSheet.create({
   
   subtext: {
     backgroundColor: 'transparent',
-  
     width: 150,
     textAlign: 'center',
     color: '#7591af',

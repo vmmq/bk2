@@ -11,7 +11,7 @@ import LoginForm from './LoginForm';
                 <View style={styles.logoContainer} >
                 
 
-                    <Image source={require('../../images/BackgroundNEW.png')} />
+                    <Image style={{width: '100%'}}source={require('../../images/BackgroundNEW.png')} />
                     
                 </View>
 
@@ -30,11 +30,13 @@ import LoginForm from './LoginForm';
     container: {
       flex: 1,
       backgroundColor: '#2b65a6',
+
     },
     logoContainer: {
-
+        maxHeight:'60%',
         alignItems: 'center',
 
       },
+      
 
   });

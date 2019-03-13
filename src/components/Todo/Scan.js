@@ -1,8 +1,12 @@
 import React, { Component } from 'react';
-import {AppRegistry,StyleSheet,Text,Image,TouchableOpacity,View} from 'react-native';
+import {AppRegistry,StyleSheet,Text,Image,TouchableOpacity,AsyncStorage,Alert} from 'react-native';
 import Scanner from 'react-native-document-scanner';
 import { Container, Header, Content, Footer, FooterTab, Button, Icon, Left, Body, Right, Title } from 'native-base';
 import {Actions} from 'react-native-router-flux';
+import Video from 'react-native-video';
+
+const API = 'https://app.bekdos.etv.im/api/';
+const DEFAULT_QUERY = 'todo/upload/';
 
 export default class Scan extends Component {
   constructor(props) {
@@ -11,17 +15,48 @@ export default class Scan extends Component {
       image: null,
       flashEnabled: false,
       useFrontCam: false,
+      isLoading: false,
+      data: {},
     };
   }
 
 
-  goTodo() {
+  goTodo= async () => {
     Actions.Todo();  
+   
   }
+
+  uploadImage = async () => {
+    this.setState({ isLoading: true });
+    const { image, isLoading } = this.state;
+    token = await AsyncStorage.getItem('id_token');
+    
+    fetch(API + DEFAULT_QUERY,{
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            "token": token,
+            "image": image,
+            "file": this.props.key_file
+        }) 
+    }) 
+      .then(response => response.json())
+      .then(data => this.setState({ valores: data, isLoading: false })) 
+      .then((responseJson) => {
+        Actions.Todo(); 
+      })
+      .catch( err => this.setState({isLoading: false }));
+      
+      console.log(image);
+      
+  }
+
+
   renderWait() {
     if(!this.state.stableCounter ){
-
-      return "Waiting for document...";
+      return "";
     }else{
       return "Wait for " + (8 - parseInt(this.state.stableCounter || 0 )) + " seconds";
     }
@@ -29,6 +64,19 @@ export default class Scan extends Component {
   }
 
   render() {
+    const { isLoading } = this.state;
+    if (isLoading) {
+      return (
+        <Video 
+        source={require('../../images/loading.mp4')}   
+        style={styles.backgroundVideo} 
+        rate={1.0}
+        volume={1.0}
+        muted={false}
+        resizeMode={"cover"}
+        repeat
+       />);
+    }
     return (
       <Container>
         <Header style={styles.header}>
@@ -41,7 +89,7 @@ export default class Scan extends Component {
           <Right />
         </Header> 
        
-      
+        
         {this.state.image ?
           <Image style={{ flex: 1, width: 400, height: 200 }} source={{ uri: `data:image/jpeg;base64,${this.state.image}`}} resizeMode="contain" /> :
           <Scanner
@@ -62,18 +110,23 @@ export default class Scan extends Component {
           {this.renderWait()}          
         </Text>
       
-        {this.state.image === null ?
-          null :
-          <TouchableOpacity style={styles.newPic} onPress={() => this.setState({ image: "" })}>
+        {this.state.image ?
+          <TouchableOpacity style={[styles.buttonDown, styles.left, styles.dorado]} onPress={() => this.setState({ image: "" })}>
             <Text>Take another picture</Text>
-          </TouchableOpacity>
+          </TouchableOpacity> :
+          <Text> </Text>
         }
 
-       
-        
-     
+        {this.state.image ?
+          <TouchableOpacity style={[styles.buttonDown, styles.right, styles.azul]} onPress={this.uploadImage.bind(this)}>
+            <Text>Upload</Text>
+          </TouchableOpacity> :
+          <Text> </Text>
+        }
 
-        <TouchableOpacity style={[styles.button]} onPress={() => this.setState({ flashEnabled: !this.state.flashEnabled })}>
+  
+
+        <TouchableOpacity style={[styles.button, styles.right]} onPress={() => this.setState({ flashEnabled: !this.state.flashEnabled })}>
           <Text>📸 Flash</Text>
         </TouchableOpacity>
 
@@ -96,11 +149,41 @@ const styles = StyleSheet.create({
   },
   button: {
     
+    position: 'absolute',
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 10,
-  
+    top: 70,
+    bottom: 20,
+    height: 40,
+    width: 120,
     backgroundColor: '#FFF',
+  },
+  buttonDown: {
+    color: '#FFF',
+    position: 'absolute',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 10,
+    bottom: 20,
+    height: 50,
+    width: 160,
+    
+  },
+  azul:{
+    backgroundColor: '#24588C',
+  },
+
+  dorado:{
+    backgroundColor: '#df951c',
+  },
+
+  right: {
+    right: 20,
+  },
+
+  left: {
+    left: 20,
   },
 
   welcome: {
@@ -128,5 +211,13 @@ const styles = StyleSheet.create({
   },
   header: {
     backgroundColor: '#2b65a6',
+  },
+  backgroundVideo: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    bottom: 0,
+    right: 0,
+    backgroundColor:'#2b65a6',
   },
 });

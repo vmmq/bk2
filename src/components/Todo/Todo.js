@@ -5,6 +5,7 @@ import {Actions} from 'react-native-router-flux';
 import Spinner from 'react-native-loading-spinner-overlay';
 import { List, ListItem } from 'react-native-elements'
 import * as Progress from 'react-native-progress';
+import Menu from '../Menu/Menu';
 
 
 
@@ -14,7 +15,6 @@ const DEFAULT_QUERY = 'todo/';
 
 
 export default class Todo extends Component {
-  respuesta = 'holaaaa';
   constructor(props) {
     super(props);
     this.goScan = this.goScan.bind(this);
@@ -25,11 +25,22 @@ export default class Todo extends Component {
       pagina: "",
     };
   }
-  goHome() {
-    Actions.Home();
-  }
+ 
   goScan(element) {
-    Actions.Scan({name: element.name, title: element.title});
+    Actions.Scan({key_file: element.name, title: element.title});
+   
+  }
+  async userLogout() {
+    try {
+      await AsyncStorage.removeItem('id_token');
+      await AsyncStorage.removeItem('id_number');
+      await AsyncStorage.removeItem('id_email');
+      await AsyncStorage.removeItem('user_role');
+      Alert.alert('Logout Success!');
+      Actions.Login();
+    } catch (error) {
+      console.log('AsyncStorage error: ' + error.message);
+    }
   }
   
 
@@ -46,22 +57,50 @@ export default class Todo extends Component {
         }) 
     }) 
       .then(response => response.json())
-      .then(data => this.setState({ valores: data, isLoading: false }));  
+      .then(data => this.setState({ valores: data, isLoading: false }))
+      .catch( err => this.setState({isLoading: false }));  
       
   }
 
-   PrintStep1() {
+  PrintStep(stepContent) {
     const { valores, isLoading } = this.state;
     var lista = [];
-    if(valores.step1){
-        for (let index = 0; index < valores.step1.length; index++) {
-          const element = valores.step1[index];
+    if(stepContent){
+        for (let index = 0; index < stepContent.length; index++) {
+          const element = stepContent[index];
+
+          switch (element.status) {
+            case 'Accepted':
+              image = require('../../images/green.png');
+              disabledOpt = true;
+              break;
+
+            case 'Pending':
+              image = require('../../images/blue.png');
+              disabledOpt = true;
+              break;
+
+            case 'Notified':
+              image = require('../../images/yellow.png');
+              disabledOpt = false;
+              break;  
+
+            case 'Declined':
+              image = require('../../images/red.png');
+              disabledOpt = false;
+              break;  
+          
+            default:
+              image = require('../../images/red.png');
+              disabledOpt = false;
+              break;
+          }
 
           if (element.name) {
             lista.push( 
-                        <TouchableOpacity key={element.name} onPress={() => this.goScan(element)}> 
+                        <TouchableOpacity disabled={disabledOpt} key={element.name} onPress={() => this.goScan(element)}> 
                         <ListItem roundAvatar
-                        avatar={require('../../images/logo.png')}
+                        avatar={image}
                         
                         title={element.title} 
                         
@@ -74,54 +113,9 @@ export default class Todo extends Component {
         return lista
     }
   }
-  PrintStep2() {
-    const { valores, isLoading } = this.state;
-    var lista = [];
-    if(valores.step2){
-        for (let index = 0; index < valores.step2.length; index++) {
-          const element = valores.step2[index];
 
-          if (element.name) {
-            lista.push( 
-              <TouchableOpacity key={element.name} onPress={() => this.goScan(element)}> 
-              <ListItem roundAvatar
-              avatar={require('../../images/logo.png')}
-              
-              title={element.title} 
-              
-              >
-              </ListItem>
-              </TouchableOpacity>
-            );
-          }
-        }  
-        return lista
-    }
-  }
-  PrintStep3() {
-    const { valores, isLoading } = this.state;
-    var lista = [];
-    if(valores.step3){
-        for (let index = 0; index < valores.step3.length; index++) {
-          const element = valores.step3[index];
-
-          if (element.name) {
-            lista.push( 
-              <TouchableOpacity key={element.name} onPress={() => this.goScan(element)}> 
-              <ListItem roundAvatar
-              avatar={require('../../images/logo.png')}
-              
-              title={element.title} 
-              
-              >
-              </ListItem>
-              </TouchableOpacity>
-            );
-          }
-        }  
-        return lista
-    }
-  }
+  
+ 
 
   render() {
     const { valores, isLoading } = this.state;
@@ -138,7 +132,7 @@ export default class Todo extends Component {
         <Header style={styles.header}>
             <Left/>
             <Body>
-              <Title style={styles.white} >To-do List</Title>
+              <Title style={styles.white} >To-do</Title>
             </Body>
             <Right />
           </Header>
@@ -153,25 +147,8 @@ export default class Todo extends Component {
             </View>
           </Content>
           <Footer >
-            <FooterTab style={styles.footer}>
-            <Button  vertical onPress={this.goHome.bind(this)}>
-                <Icon style={styles.white} name="apps"  />
-                <Text style={styles.white} >Home</Text>
-              </Button>
-              <Button active vertical style={styles.selected}  > 
-                <Icon style={styles.white} name="list" />
-                <Text style={styles.white} >To-Do</Text>
-              </Button>
-              <Button  vertical >
-                <Icon style={styles.white} active name="book" />
-                <Text style={styles.white}>Classrom</Text>
-              </Button>
-              <Button vertical  >
-                <Icon style={styles.white} name="person" />
-                <Text style={styles.white} >Profile</Text>
-              </Button>
-            </FooterTab>
-          </Footer>
+              <Menu selected={"To-do"}></Menu>
+            </Footer>
         
       </Container>;
        
@@ -185,7 +162,7 @@ export default class Todo extends Component {
         <Header style={styles.header}>
             <Left/>
             <Body>
-              <Title style={styles.white} >To-do List</Title>
+              <Title style={styles.white} >To-do</Title>
             </Body>
             <Right />
         </Header>
@@ -195,7 +172,7 @@ export default class Todo extends Component {
         <Progress.Bar progress={valores.completed_1} width={200} style={styles.progress} />
         </View>
         <List containerStyle={{marginBottom: 20}}>
-          {this.PrintStep1()}
+          {this.PrintStep(valores.step1)}
         </List>
 
         <Text style={styles.subtext} >Step 2</Text>
@@ -203,7 +180,7 @@ export default class Todo extends Component {
         <Progress.Bar progress={valores.completed_2} width={200} style={styles.progress} />
         </View>
         <List containerStyle={{marginBottom: 20}}>
-          {this.PrintStep2()}
+        {this.PrintStep(valores.step2)}
         </List>
 
         <Text style={styles.subtext} >Step 3</Text>
@@ -211,30 +188,13 @@ export default class Todo extends Component {
         <Progress.Bar progress={valores.completed_3} width={200} style={styles.progress} />
         </View>
         <List containerStyle={{marginBottom: 20}}>
-          {this.PrintStep3()}
+        {this.PrintStep(valores.step3)}
         </List>
             
         </Content>
         <Footer >
-            <FooterTab style={styles.footer}>
-            <Button  vertical onPress={this.goHome.bind(this)}>
-                <Icon style={styles.white} name="apps"  />
-                <Text style={styles.white} >Home</Text>
-              </Button>
-              <Button active vertical style={styles.selected}  > 
-                <Icon style={styles.white} name="list" />
-                <Text style={styles.white} >To-Do</Text>
-              </Button>
-              <Button  vertical >
-                <Icon style={styles.white} active name="book" />
-                <Text style={styles.white}>Classrom</Text>
-              </Button>
-              <Button vertical  >
-                <Icon style={styles.white} name="person" />
-                <Text style={styles.white} >Profile</Text>
-              </Button>
-            </FooterTab>
-          </Footer>
+              <Menu selected={"To-do"}></Menu>
+            </Footer>
       </Container>
 
      

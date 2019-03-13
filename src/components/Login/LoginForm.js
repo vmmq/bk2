@@ -9,7 +9,7 @@ import {RkButton} from 'react-native-ui-kitten';
  export default class LoginForm extends Component {
     constructor() {
         super();
-        this.state = { username: null, password: null };
+        this.state = { username: null, password: null, disabled: false };
     }
 
     async saveItem(item, selectedValue) {
@@ -23,6 +23,9 @@ import {RkButton} from 'react-native-ui-kitten';
 
     userLogin() {
         Keyboard.dismiss;
+  
+        this.setState({disabled: true});
+
         fetch('https://app.bekdos.etv.im/api/login/', {
             method: 'POST',
             headers: {
@@ -47,10 +50,12 @@ import {RkButton} from 'react-native-ui-kitten';
                 //Alert.alert("Token:  " + responseJson.token);
             } else {
                 Alert.alert("The username or password you entered is incorrect");
+                this.setState({disabled: false});
             }        
         })
         .catch((error) => {
             console.error(error);
+            this.setState({disabled: false});
         }); 
       }
 
@@ -95,7 +100,8 @@ import {RkButton} from 'react-native-ui-kitten';
                 <RkButton
                     onPress={this.userLogin.bind(this)}
                     style={styles.button}
-                    contentStyle={styles.buttonIn}>
+                    contentStyle={styles.buttonIn}
+                    disabled={this.state.disabled}>
                     Login
                 </RkButton>
                 </TouchableOpacity>
@@ -113,6 +119,8 @@ import {RkButton} from 'react-native-ui-kitten';
  const styles = StyleSheet.create({
     container: {
       padding:30,
+      marginTop:'10%',
+      
       
       
       
