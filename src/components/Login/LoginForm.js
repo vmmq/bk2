@@ -45,9 +45,19 @@ import {RkButton} from 'react-native-ui-kitten';
                 this.saveItem('id_token', responseJson.token);
                 this.saveItem('id_number', responseJson.id_number);
                 this.saveItem('email', responseJson.email);
+                this.saveItem('full_name', responseJson.full_name);
                 this.saveItem('user_role', responseJson.user_role);
+
+                this.saveItem('phone_number', responseJson.phone_number);
+                this.saveItem('birthdate', responseJson.birthdate);
+                this.saveItem('citizenship_primary', responseJson.citizenship_primary);
+                this.saveItem('scholarship', responseJson.scholarship);
+                this.saveItem('wes_id', responseJson.wes_id);
+                this.saveItem('naia_id', responseJson.naia_id);
+                this.saveItem('ncaa_id', responseJson.ncaa_id);
+
                 Actions.Home();
-                //Alert.alert("Token:  " + responseJson.token);
+                //Alert.alert("Token:  " + responseJson.full_name);
             } else {
                 Alert.alert("The username or password you entered is incorrect");
                 this.setState({disabled: false});

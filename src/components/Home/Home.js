@@ -174,7 +174,7 @@ export default class Home extends Component {
                   arcSweepAngle={240}
                   rotation={240}
                   lineCap="round" >
-                  {(fill) => ( <Text style={styles.porcentaje}> { valores.step2 }% </Text> )}
+                  {(fill) => ( <Text style={styles.porcentaje} onPress={this.goTodo.bind(this)}> { valores.step2 }% </Text> )}
                 </AnimatedCircularProgress>   
                 <Text style={styles.subtext} onPress={this.goTodo.bind(this)}> Step 2 </Text>
               </View>
@@ -190,7 +190,7 @@ export default class Home extends Component {
                   arcSweepAngle={240}
                   rotation={240}
                   lineCap="round" >
-                  {(fill) => ( <Text style={styles.porcentaje}> { valores.step3 }% </Text> )}
+                  {(fill) => ( <Text style={styles.porcentaje} onPress={this.goTodo.bind(this)}> { valores.step3 }% </Text> )}
                 </AnimatedCircularProgress>   
                 <Text style={styles.subtext} onPress={this.goTodo.bind(this)} > Step 3 </Text>
               </View>

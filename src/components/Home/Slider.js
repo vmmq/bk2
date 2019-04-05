@@ -42,7 +42,7 @@ export default class Slider extends Component {
       .then(data => {
         if (this._isMounted) {
         this.setState({ 
-            videos: data.news, isLoading: false 
+            videos: data.featured, isLoading: false 
         });
         }
       });  

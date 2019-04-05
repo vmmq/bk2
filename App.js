@@ -8,16 +8,17 @@
 
 import React, {Component} from 'react';
 import {AsyncStorage, StyleSheet, ActivityIndicator, View} from 'react-native';
-import Splash from './src/components/Splash/Splash';
 import Login from './src/components/Login/Login';
 import Home from './src/components/Home/Home';
 import Todo from './src/components/Todo/Todo';
 import Scan from './src/components/Todo/Scan';
+import Detail from './src/components/Todo/Detail';
 import Profile from './src/components/Profile/Profile';
 import Faqs from './src/components/Profile/Faqs';
+import AccountInfo from './src/components/Profile/AccountInfo';
 import Support from './src/components/Profile/Support';
 import Classroom from './src/components/Classroom/Classroom';
-import TodoDetail from './src/components/TodoDetail/TodoDetail';
+
 
 import {Router, Scene} from 'react-native-router-flux';
 
@@ -69,6 +70,13 @@ export default class App extends Component {
             key='Todo'
             hideNavBar={true}
           />
+
+          <Scene 
+            component={Detail}
+            title='To-Do Detail'
+            key='Detail'
+            hideNavBar={true}
+          />
           
           <Scene 
             component={Scan}
@@ -102,7 +110,14 @@ export default class App extends Component {
             key='Support'
             hideNavBar={true}
           />
+          <Scene 
+            component={AccountInfo}
+            title='AccountInfo'
+            key='AccountInfo'
+            hideNavBar={true}
+          />
           </Scene>
+          
           
           
           

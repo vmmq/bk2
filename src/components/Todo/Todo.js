@@ -30,6 +30,13 @@ export default class Todo extends Component {
     Actions.Scan({key_file: element.name, title: element.title});
    
   }
+
+  goDetail(element) {
+    Actions.Detail({key_file: element.name, title: element.title, subtitle: element.subtitle, status: element.status, action: element.action});
+   
+  }
+
+
   async userLogout() {
     try {
       await AsyncStorage.removeItem('id_token');
@@ -72,12 +79,12 @@ export default class Todo extends Component {
           switch (element.status) {
             case 'Accepted':
               image = require('../../images/green.png');
-              disabledOpt = true;
+              disabledOpt = false;
               break;
 
             case 'Pending':
               image = require('../../images/blue.png');
-              disabledOpt = true;
+              disabledOpt = false;
               break;
 
             case 'Notified':
@@ -98,7 +105,7 @@ export default class Todo extends Component {
 
           if (element.name) {
             lista.push( 
-                        <TouchableOpacity disabled={disabledOpt} key={element.name} onPress={() => this.goScan(element)}> 
+                        <TouchableOpacity disabled={disabledOpt} key={element.name} onPress={() => this.goDetail(element)}> 
                         <ListItem roundAvatar
                         avatar={image}
                         

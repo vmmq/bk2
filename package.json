@@ -20,6 +20,7 @@
     "react-native-image-header-scroll-view": "^0.10.1",
     "react-native-image-slider-show": "^1.0.3",
     "react-native-loading-spinner-overlay": "^1.0.1",
+    "react-native-onboarding-swiper": "^1.0.1",
     "react-native-progress": "^3.5.0",
     "react-native-router-flux": "^4.0.6",
     "react-native-snap-carousel": "^3.7.5",

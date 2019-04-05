@@ -49,7 +49,7 @@ import Menu from '../Menu/Menu';
 
                 <TouchableOpacity key='inter' onPress={() => Linking.openURL('mailto:seguimiento@bk2usa.com') }
       title="seguimiento@bk2usa.com"> 
-                        <ListItem  title='International Student Support'/>
+                        <ListItem  title='International Support'/>
                 </TouchableOpacity>
 
                 

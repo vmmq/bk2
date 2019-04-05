@@ -21,7 +21,7 @@
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>1</string>
+	<string>9vico211094</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>
@@ -33,12 +33,14 @@
 			<key>localhost</key>
 			<dict>
 				<key>NSExceptionAllowsInsecureHTTPLoads</key>
-				<true/>
+				<false/>
 			</dict>
 		</dict>
 	</dict>
 	<key>NSCameraUsageDescription</key>
 	<string>We are using a camera to enable you to upload pictures of documents</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>We determine the country base on your location to assing a follow up bk2 agent to your case</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>We are using to assign you the nearest teacher</string>
 	<key>UIAppFonts</key>

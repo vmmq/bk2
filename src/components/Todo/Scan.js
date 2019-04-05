@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {AppRegistry,StyleSheet,Text,Image,TouchableOpacity,AsyncStorage,Alert} from 'react-native';
 import Scanner from 'react-native-document-scanner';
-import { Container, Header, Content, Footer, FooterTab, Button, Icon, Left, Body, Right, Title } from 'native-base';
+import { Container, Header, Content, Footer, FooterTab, Button, Icon, Left, Body, Right, View } from 'native-base';
 import {Actions} from 'react-native-router-flux';
 import Video from 'react-native-video';
 
@@ -22,7 +22,7 @@ export default class Scan extends Component {
 
 
   goTodo= async () => {
-    Actions.Todo();  
+    Actions.Detail({key_file: this.props.key_file, title: this.props.title, subtitle: this.props.subtitle,status: this.props.status, action: this.props.action});  
    
   }
 
@@ -45,9 +45,15 @@ export default class Scan extends Component {
       .then(response => response.json())
       .then(data => this.setState({ valores: data, isLoading: false })) 
       .then((responseJson) => {
-        Actions.Todo(); 
+        console.log("Success:");
+        console.log(responseJson);
+      
+        Actions.Detail({key_file: this.props.key_file, title: this.props.title, status: "Pending", action: this.props.action}); 
       })
-      .catch( err => this.setState({isLoading: false }));
+      .catch( err => {
+        this.setState({isLoading: false });
+        Alert.alert("There was a problem uploading your file, please try again!");
+      });
       
       console.log(image);
       
@@ -56,9 +62,9 @@ export default class Scan extends Component {
 
   renderWait() {
     if(!this.state.stableCounter ){
-      return "";
+      return "8";
     }else{
-      return "Wait for " + (8 - parseInt(this.state.stableCounter || 0 )) + " seconds";
+      return (8 - parseInt(this.state.stableCounter || 0 )) ;
     }
     
   }
@@ -78,16 +84,11 @@ export default class Scan extends Component {
        />);
     }
     return (
-      <Container>
-        <Header style={styles.header}>
-            <Button transparent onPress={this.goTodo.bind(this)} >
-              <Icon name='arrow-back' />
-            </Button>
-          <Body>
-            <Title style={styles.white} >Scan {this.props.title}</Title>
-          </Body>
-          <Right />
-        </Header> 
+      <Container style={styles.container}>
+        
+            
+           
+          
        
         
         {this.state.image ?
@@ -106,28 +107,41 @@ export default class Scan extends Component {
             style={styles.scanner}
           />
         }
-        <Text style={styles.instructions}>
-          {this.renderWait()}          
-        </Text>
+        
+        {!this.state.image && <View style={styles.instructions}>
+          <Text>
+          <Icon name='md-radio-button-off' style={styles.icon3}/>  
+          </Text>
+          <Text style={styles.inMessage}> 
+            {this.renderWait()}          
+          </Text>
+                 
+        </View>}
+
+        
+        
       
         {this.state.image ?
           <TouchableOpacity style={[styles.buttonDown, styles.left, styles.dorado]} onPress={() => this.setState({ image: "" })}>
             <Text>Take another picture</Text>
           </TouchableOpacity> :
-          <Text> </Text>
+          <Text style={styles.nulo}> </Text>
         }
 
         {this.state.image ?
           <TouchableOpacity style={[styles.buttonDown, styles.right, styles.azul]} onPress={this.uploadImage.bind(this)}>
             <Text>Upload</Text>
           </TouchableOpacity> :
-          <Text> </Text>
+          <Text style={styles.nulo}> </Text>
         }
 
   
 
         <TouchableOpacity style={[styles.button, styles.right]} onPress={() => this.setState({ flashEnabled: !this.state.flashEnabled })}>
-          <Text>📸 Flash</Text>
+        <Icon name='ios-flash' style={styles.icon2}/>
+        </TouchableOpacity>
+        <TouchableOpacity style={[styles.button, styles.left]} onPress={this.goTodo.bind(this)}>
+        <Icon name='close' style={styles.icon}/>
         </TouchableOpacity>
 
       </Container>
@@ -137,10 +151,8 @@ export default class Scan extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
+
+    backgroundColor: '#000',
   },
   newPic: {
    
@@ -148,16 +160,33 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   },
   button: {
-    
     position: 'absolute',
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 10,
-    top: 70,
+    top: 20,
     bottom: 20,
-    height: 40,
-    width: 120,
-    backgroundColor: '#FFF',
+    height: 50,
+    width: 50,
+
+  },
+  icon:{
+    fontSize:50,
+    color:'#FFF'
+  },
+  icon2:{
+    fontSize:40,
+    color:'#FFF'
+  },
+  icon3:{
+    fontSize:70,
+    color:'#FFF'
+  },
+  inMessage:{
+    fontSize:25,
+    color:'#FFF',
+    top:-57,
+    left:21
   },
   buttonDown: {
     color: '#FFF',
@@ -193,25 +222,29 @@ const styles = StyleSheet.create({
   },
   instructions: {
     textAlign: 'center',
-    color: '#333333',
-    
+    color: '#fff',
+    position: 'absolute',
+    left:'44%',
+    bottom: 30,
+    height: 80, 
   },
+
   scanner: {
     flex: 1,
-    width: 400,
-    height: 200,
-    borderColor: 'orange',
-    borderWidth: 1
+    width: 500,
+    height: 500,
+    borderColor: 'black',
+    borderWidth: 0
+  },
+
+  nulo: {
+    width: 0,
+    height: 0,
+
   },
 
 
 
-  white: {
-    color:'#FFF', 
-  },
-  header: {
-    backgroundColor: '#2b65a6',
-  },
   backgroundVideo: {
     position: 'absolute',
     top: 0,
