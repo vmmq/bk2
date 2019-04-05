@@ -55,7 +55,12 @@ const dataArray = [
               </Header>
               <Content>     
               <Content padder>
-                  <Accordion dataArray={dataArray} expanded={0}/>
+                  <Accordion 
+                  dataArray={dataArray} 
+                  expanded={0}
+                  headerStyle={{ backgroundColor: "#FFF",  }}
+                  contentStyle={{ backgroundColor: "#FFF" }}
+                  />
               </Content>
               </Content>
               <Footer >

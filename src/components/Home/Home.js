@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { Container, Header, Content, Footer, FooterTab, Button, Icon, Text, Left, Body, Right, Title } from 'native-base';
-import { AsyncStorage, Alert, Linking, StyleSheet, View} from 'react-native';
+import { AsyncStorage, Alert, Linking, StyleSheet, View, ImageBackground, Dimensions, Image} from 'react-native';
 import {  AnimatedCircularProgress } from 'react-native-circular-progress';
 import styled from "styled-components/native"; 
 import Carousel from 'react-native-snap-carousel'; 
+import Onboarding from 'react-native-onboarding-swiper';
 import {Actions} from 'react-native-router-flux';
 import Spinner from 'react-native-loading-spinner-overlay';
 import Slider from './Slider';
@@ -22,6 +23,7 @@ export default class Home extends Component {
     this.state = {
       valores: {profile:0,step1:0,step2:0,step3:0},
       isLoading: false,
+      isDone:'true',
     };
   }
 
@@ -54,11 +56,23 @@ export default class Home extends Component {
     Actions.Home();  
   }
 
+  tutorialDone = async () => {
+    this.setState({isDone: 'true' });
+    await AsyncStorage.setItem('isDone', 'true');
+  }
 
 
   componentDidMount = async () => {
-    this.setState({ isLoading: true });
+    this.setState({ 
+      isLoading: true,
+    });
+
+    is_done = await AsyncStorage.getItem('isDone');
+    this.setState({isDone: is_done })
+
     token = await AsyncStorage.getItem('id_token');
+
+
     fetch(API + DEFAULT_QUERY,{
         method: 'POST',
         headers: {
@@ -81,8 +95,58 @@ export default class Home extends Component {
     spiner=true
     if(valores.error){
       this.userLogout();
-      return <Text>Sesion iniciada en otro dispositivo</Text>;
     }
+
+    if (this.state.isDone == 'false') {
+      return (
+          
+          <ImageBackground source={require('../../images/onboard_bg.png')} style={{width: '100%', height: '100%'}}>
+          <Onboarding
+          
+          onSkip={() => this.tutorialDone()}
+          onDone={() => this.tutorialDone()}
+          pages={[
+              {
+              
+                  backgroundColor: 'rgba(255,255,255,0)',
+                  image: <View><Image style={styles.pantalla} source={require('../../images/onboard_1.png')} /></View>,
+                  title: '',
+                  subtitle: '',
+                  
+              },
+              {
+                  backgroundColor: 'rgba(255,255,255,0)',
+                  image: <View><Image style={styles.pantalla} source={require('../../images/onboard_2.png')} /></View>,
+                  title: '',
+                  subtitle: '',
+              },
+              {
+                  backgroundColor: 'rgba(255,255,255,0)',
+                  image: <View><Image style={styles.pantalla} source={require('../../images/onboard_3.png')} /></View>,
+                  title: '',
+                  subtitle: '',
+              },
+              {
+                  backgroundColor: 'rgba(255,255,255,0)',
+                  image: <View><Image style={styles.pantalla} source={require('../../images/onboard_4.png')} /></View>,
+                  title: '',
+                  subtitle: '',
+              },
+              {
+                  backgroundColor: 'rgba(255,255,255,0)',
+                  image: <View><Image style={styles.pantalla} source={require('../../images/onboard_5.png')} /></View>,
+                  title: '',
+                  subtitle: '',
+              }
+               
+              
+          ]}
+          />
+      </ImageBackground>
+  
+      );
+  }
+
 
     if (isLoading) {
       return <Container>
@@ -255,6 +319,14 @@ const styles = StyleSheet.create({
   },
   selected: {
     backgroundColor: '#df951c',
-  }
+  },
+  pantalla:{
+    flex: 1,
+    width: Dimensions.get('window').width,
+    height: Dimensions.get('window').height,
+    top:40,
+
+
+},
   
 });

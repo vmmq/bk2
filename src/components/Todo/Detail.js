@@ -83,7 +83,7 @@ export default class Detail extends Component {
         break;
 
       case 'Pending':
-        image = require('../../images/blue.png');
+        image = require('../../images/yellow.png');
         description="Processing! Our team is reviewing this requirement. You will know that it has been approved when it turns green.";
         disabledOpt = false;
 
@@ -100,7 +100,7 @@ export default class Detail extends Component {
         break;
 
       case 'Notified':
-        image = require('../../images/yellow.png');
+        image = require('../../images/blue.png');
         description="Place the document on a dark background and in a well-lit environment. Wait a few seconds, and go!";
         disabledOpt = false;
 

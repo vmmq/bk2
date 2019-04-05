@@ -83,12 +83,12 @@ export default class Todo extends Component {
               break;
 
             case 'Pending':
-              image = require('../../images/blue.png');
+              image = require('../../images/yellow.png');
               disabledOpt = false;
               break;
 
             case 'Notified':
-              image = require('../../images/yellow.png');
+              image = require('../../images/blue.png');
               disabledOpt = false;
               break;  
 

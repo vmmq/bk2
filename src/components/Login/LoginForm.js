@@ -12,6 +12,11 @@ import {RkButton} from 'react-native-ui-kitten';
         this.state = { username: null, password: null, disabled: false };
     }
 
+    componentDidMount = async () => {
+        await AsyncStorage.setItem('isDone', 'false');
+      }
+
+
     async saveItem(item, selectedValue) {
         try {
           await AsyncStorage.setItem(item, selectedValue);
@@ -55,6 +60,8 @@ import {RkButton} from 'react-native-ui-kitten';
                 this.saveItem('wes_id', responseJson.wes_id);
                 this.saveItem('naia_id', responseJson.naia_id);
                 this.saveItem('ncaa_id', responseJson.ncaa_id);
+                
+                
 
                 Actions.Home();
                 //Alert.alert("Token:  " + responseJson.full_name);

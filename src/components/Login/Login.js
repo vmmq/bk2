@@ -15,58 +15,7 @@ import Onboarding from 'react-native-onboarding-swiper';
      render(){
       
   
-        if (!this.state.isDone) {
-            return (
-                
-                    
-   
-
-                <ImageBackground source={require('../../images/onboard_bg.png')} style={{width: '100%', height: '100%'}}>
-                <Onboarding
-                
-                onSkip={() => this.setState({ isDone: true })}
-                onDone={() => this.setState({ isDone: true })}
-                pages={[
-                    {
-                    
-                        backgroundColor: 'rgba(255,255,255,0)',
-                        image: <View><Image style={styles.pantalla} source={require('../../images/onboard_1.png')} /></View>,
-                        title: '',
-                        subtitle: '',
-                        
-                    },
-                    {
-                        backgroundColor: 'rgba(255,255,255,0)',
-                        image: <View><Image style={styles.pantalla} source={require('../../images/onboard_2.png')} /></View>,
-                        title: '',
-                        subtitle: '',
-                    },
-                    {
-                        backgroundColor: 'rgba(255,255,255,0)',
-                        image: <View><Image style={styles.pantalla} source={require('../../images/onboard_3.png')} /></View>,
-                        title: '',
-                        subtitle: '',
-                    },
-                    {
-                        backgroundColor: 'rgba(255,255,255,0)',
-                        image: <View><Image style={styles.pantalla} source={require('../../images/onboard_4.png')} /></View>,
-                        title: '',
-                        subtitle: '',
-                    },
-                    {
-                        backgroundColor: 'rgba(255,255,255,0)',
-                        image: <View><Image style={styles.pantalla} source={require('../../images/onboard_5.png')} /></View>,
-                        title: '',
-                        subtitle: '',
-                    }
-                     
-                    
-                ]}
-                />
-            </ImageBackground>
         
-            );
-        }
          return(
          
              <KeyboardAvoidingView behavior="position" style={styles.container} >    
@@ -96,7 +45,6 @@ import Onboarding from 'react-native-onboarding-swiper';
       },
       pantalla:{
         flex: 1,
-  
         width: Dimensions.get('window').width,
         height: Dimensions.get('window').height,
         top:40,
