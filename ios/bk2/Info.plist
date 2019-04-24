@@ -21,7 +21,7 @@
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>10</string>
+	<string>12</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>
@@ -43,6 +43,8 @@
 	<string>We determine the country base on your location to assing a follow up bk2 agent to your case</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>We are using to assign you the nearest teacher</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>We are accesing the photo library to upload your profile picture</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Entypo.ttf</string>

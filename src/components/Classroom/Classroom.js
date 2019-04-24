@@ -4,7 +4,6 @@ import { AsyncStorage, Alert, Linking, StyleSheet, View, TouchableOpacity} from 
 import {Actions} from 'react-native-router-flux';
 import Spinner from 'react-native-loading-spinner-overlay';
 import { List, ListItem,Card, Button } from 'react-native-elements'
-import * as Progress from 'react-native-progress';
 import Menu from '../Menu/Menu';
 
 
@@ -84,25 +83,36 @@ export default class Classroom extends Component {
               <Card 
               key={element.id}
               title={element.title} 
+              containerStyle={{ borderColor: "#2b65a6",borderWidth: 1,
+              borderRadius: 2,
+     
+              borderBottomWidth: 0,
+              shadowColor: '#036',
+              shadowOffset: { width: 0, height: 2 },
+              shadowOpacity: 0.8,
+              shadowRadius: 2,
+              elevation: 1,
+              marginLeft: 5,
+              marginRight: 5,
+              marginTop: 10,}}
               image={{uri: element.thumbnail}}>
-              <Text style={{textAlign: 'justify',marginBottom: 10}}>
-              {element.intro} 
-              </Text>
+              
+                <Text style={{textAlign: 'justify',marginBottom: 10}}>
+                {element.intro} 
+                </Text>
 
-              <TouchableOpacity 
-      > 
-              <Button
-                onPress={() => Linking.openURL(element.url) }
-                backgroundColor='#2b65a6'
-                buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 0}}
-                title='Read More' />
-
-              </TouchableOpacity>
+                <TouchableOpacity> 
+                  <Button
+                    onPress={() => Linking.openURL(element.url) }
+                    backgroundColor='#2b65a6'
+                    buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 0}}
+                    title='Read More' />
+                </TouchableOpacity>
               </Card>
               
 
 
-                      );
+              );
           }
         }  
         return lista

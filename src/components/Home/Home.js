@@ -137,7 +137,13 @@ export default class Home extends Component {
                   image: <View><Image style={styles.pantalla} source={require('../../images/onboard_5.png')} /></View>,
                   title: '',
                   subtitle: '',
-              }
+              },
+              {
+                backgroundColor: 'rgba(255,255,255,0)',
+                image: <View><Image style={styles.pantalla} source={require('../../images/onboard_6.png')} /></View>,
+                title: '',
+                subtitle: '',
+            }
                
               
           ]}

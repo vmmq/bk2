@@ -7,17 +7,22 @@ import {RkButton} from 'react-native-ui-kitten';
 import Menu from '../Menu/Menu';
 
 const API = 'https://app.bekdos.etv.im/api/';
-const DEFAULT_QUERY = 'todo/upload/';
+const DEFAULT_QUERY = 'profile/modify/';
 
  export default class Classroom extends Component {
   constructor(props) {
     super(props);
-
+    full_name_updated = "";
     this.state = {
-      id_number: "",
-      full_name:"",
-      email:"",
-      phone_number:"",
+      id_number: " ",
+      full_name:" ",
+      email:" ",
+      birthdate:" ",
+      citizenship_primary:" ",
+      scholarship:" ",
+      wes_id:" ",
+      naia_id:" ",
+      ncaa_id:" ",
     };
   }
 
@@ -26,28 +31,74 @@ const DEFAULT_QUERY = 'todo/upload/';
       }
 
 
-      shareVideo = async () => {
-  
+      loadInfo = async () => {
+        
+        if(this.state.full_name){
+          await AsyncStorage.setItem('full_name', this.state.full_name);
+        }
+
+        if(this.state.email){
+          await AsyncStorage.setItem('email', this.state.email);
+        }
+
+        if(this.state.phone_number){
+          await AsyncStorage.setItem('phone_number', this.state.phone_number);
+        }
+
+        if(this.state.citizenship_primary){
+          await AsyncStorage.setItem('citizenship_primary', this.state.citizenship_primary);
+        }
+
+        if(this.state.scholarship){
+          await AsyncStorage.setItem('scholarship', this.state.scholarship);
+        }
+        
+ 
+        /*await AsyncStorage.setItem('wes_id', this.state.wes_id);*/
+        /*await AsyncStorage.setItem('naia_id', this.state.naia_id);*/
+        /*await AsyncStorage.setItem('ncaa_id', this.state.ncaa_id);*/
+
+
         token = await AsyncStorage.getItem('id_token');
-        Actions.Profile();  
+
+
         fetch(API + DEFAULT_QUERY,{
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                "token": token,
-       
-            }) 
-        }) 
-          .then(response => response.json())
-          .then(data => this.setState({ valores: data, isLoading: false })) 
-          .then((responseJson) => {
-            console.log("Success:");
-            console.log(responseJson);
-    
-          })
-          .catch( );
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+              "token": token,
+              "full_name": this.state.full_name,
+              "email": this.state.email,
+              "scholarship": this.state.scholarship,
+              "phone_number": this.state.phone_number,
+              "citizenship_primary": this.state.citizenship_primary,
+              "birthdate": this.state.birthdate,
+          
+
+           
+          }) 
+      }) 
+        .then(response => response.json())
+        .then(data => this.setState({ valores: data})) 
+        .then((responseJson) => {
+          console.log("Success:");
+          console.log(responseJson);
+          this.goProfile();
+        })
+        .catch( err => {
+
+          Alert.alert("There was a problem , please try again!");
+        });
+
+
+
+        
+
+
+
+        
       }
 
       componentDidMount = async () => {
@@ -103,36 +154,38 @@ const DEFAULT_QUERY = 'todo/upload/';
               <Content>     
              
               <FormLabel>Full Name</FormLabel>
-              <FormInput >{this.state.full_name}</FormInput>
+              <FormInput onChangeText={(text) => this.setState({full_name: text})}>
+                {this.state.full_name}
+              </FormInput>
 
               <FormLabel>Email</FormLabel>
-              <FormInput>{this.state.email}</FormInput>
+              <FormInput onChangeText={(text) => this.setState({email: text})}>{this.state.email}</FormInput>
 
               <FormLabel>Phone Number </FormLabel>
-              <FormInput keyboardType="numeric" >{this.state.phone_number}</FormInput>
+              <FormInput onChangeText={(text) => this.setState({phone_number: text})} keyboardType="numeric" >{this.state.phone_number}</FormInput>
          
 
               <FormLabel>Birthdate</FormLabel>
-              <FormInput>{this.state.birthdate}</FormInput>
+              <FormInput onChangeText={(text) => this.setState({birthdate: text})} >{this.state.birthdate}</FormInput>
 
               <FormLabel>Citizenship</FormLabel>
-              <FormInput>{this.state.citizenship_primary}</FormInput>
+              <FormInput onChangeText={(text) => this.setState({citizenship_primary: text})} >{this.state.citizenship_primary}</FormInput>
 
               <FormLabel>WES ID</FormLabel>
-              <FormInput>{this.state.wes_id}</FormInput>
+              <FormInput onChangeText={(text) => this.setState({wes_id: text})} >{this.state.wes_id}</FormInput>
 
               <FormLabel>NAIA ID</FormLabel>
-              <FormInput>{this.state.naia_id}</FormInput>
+              <FormInput onChangeText={(text) => this.setState({naia_id: text})} >{this.state.naia_id}</FormInput>
 
               <FormLabel>NCAA ID</FormLabel>
-              <FormInput>{this.state.ncaa_id}</FormInput>
+              <FormInput onChangeText={(text) => this.setState({ncaa_id: text})} >{this.state.ncaa_id}</FormInput>
 
               <FormLabel>Scholarship Type</FormLabel>
-              <FormInput>{this.state.scholarship}</FormInput>
+              <FormInput onChangeText={(text) => this.setState({scholarship: text})} >{this.state.scholarship}</FormInput>
 
               <TouchableOpacity style={styles.buttonContainer}   >   
                 <RkButton
-                    onPress={() => this.shareVideo()}
+                    onPress={() => this.loadInfo()}
                     style={styles.button}
                     contentStyle={styles.buttonIn}>
                     Save!

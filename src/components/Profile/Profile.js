@@ -4,6 +4,11 @@ import { AsyncStorage, Alert, View, StyleSheet, TouchableOpacity, Image} from 'r
 import {Actions} from 'react-native-router-flux';
 import { List, ListItem } from 'react-native-elements'
 import Menu from '../Menu/Menu';
+import PhotoUpload from 'react-native-photo-upload'
+import Video from 'react-native-video';
+
+const API = 'https://app.bekdos.etv.im/api/';
+const DEFAULT_QUERY = 'profile/upload/';
 
  export default class Classroom extends Component {
   constructor(props) {
@@ -12,6 +17,7 @@ import Menu from '../Menu/Menu';
     this.state = {
       id_number: "",
       full_name: "",
+      isLoading: false,
     };
   }
 
@@ -45,7 +51,56 @@ import Menu from '../Menu/Menu';
           console.log('AsyncStorage error: ' + error.message);
         }
       }
+
+      uploadImage = async (avatar) => {
+        this.setState({ isLoading: true });
+        token = await AsyncStorage.getItem('id_token');
+
+
+        fetch(API + DEFAULT_QUERY,{
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+              "token": token,
+              "image": avatar,
+           
+          }) 
+      }) 
+        .then(response => response.json())
+        .then(data => this.setState({ valores: data})) 
+        .then((responseJson) => {
+          this.setState({isLoading: false });
+          console.log("Success:");
+          console.log(responseJson);
+          
+        })
+        .catch( err => {
+          this.setState({isLoading: false });
+          Alert.alert("There was a problem uploading your file, please try again!");
+        });
+        
+        
+
+
+        
+        
+      }
      render(){
+      const { isLoading } = this.state;
+      if (isLoading) {
+        return (
+          <Video 
+          source={require('../../images/loading.mp4')}   
+          style={styles.backgroundVideo} 
+          rate={1.0}
+          volume={1.0}
+          muted={false}
+          resizeMode={"cover"}
+          repeat
+         />);
+      }
          return(
             <Container>
             <Header style={styles.header}>
@@ -59,7 +114,21 @@ import Menu from '../Menu/Menu';
               <Content>     
             
               <Image style={styles.header2} source={require('../../images/dark-material-bg.jpg')}/>
-                <Image style={styles.avatar} source={require('../../images/profile.png')}/>
+              <View style={styles.imageUpload} >
+                <PhotoUpload
+                  format={"PNG"}
+                  quality={5}
+                  onPhotoSelect={avatar => {this.uploadImage(avatar)}}
+
+                  
+                >
+                  <Image
+                    style={styles.avatar}
+                    
+                    source={{uri: 'https://app.bekdos.etv.im/api/profile/public_picture/index.php?id_number='+this.state.id_number}}
+                  />
+                </PhotoUpload>
+              </View>              
                 <View style={styles.body}>
                   <View style={styles.bodyContent}>
                     <Text style={styles.name}>{this.state.full_name}</Text>
@@ -142,9 +211,14 @@ import Menu from '../Menu/Menu';
         borderWidth: 4,
         borderColor: "white",
         marginBottom:10,
+        
+     
+      },
+      imageUpload: {
+        marginTop:130,
         alignSelf:'center',
         position: 'absolute',
-        marginTop:130
+        
       },
       name:{
         fontSize:22,
@@ -185,6 +259,14 @@ import Menu from '../Menu/Menu';
         width:250,
         borderRadius:30,
         backgroundColor: "#00BFFF",
+      },
+      backgroundVideo: {
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        bottom: 0,
+        right: 0,
+        backgroundColor:'#2b65a6',
       },
   
   });

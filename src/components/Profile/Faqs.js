@@ -58,7 +58,7 @@ const dataArray = [
                   <Accordion 
                   dataArray={dataArray} 
                   expanded={0}
-                  headerStyle={{ backgroundColor: "#FFF",  }}
+                  headerStyle={{ backgroundColor: "#939393" }}
                   contentStyle={{ backgroundColor: "#FFF" }}
                   />
               </Content>

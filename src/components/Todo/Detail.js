@@ -92,6 +92,11 @@ export default class Detail extends Component {
         
         }
 
+        if(this.props.action == "fromweb"){
+          disabledOpt = true;
+        
+        }
+
         if(this.props.action == "video"){
           disabledOpt = true;
           
@@ -107,6 +112,11 @@ export default class Detail extends Component {
         if(this.props.action == "noupload"){
           disabledOpt = true;
           description="The university will send this document once you have been accepted. Our team will keep you informed.";
+        }
+
+        if(this.props.action == "fromweb"){
+          disabledOpt = true;
+          description="Please upload this document in the BK2 students web page.";
         }
 
         if(this.props.action == "video"){
@@ -127,6 +137,11 @@ export default class Detail extends Component {
           description="The university will send this document once you have been accepted. Our team will keep you informed.";
         }
 
+        if(this.props.action == "fromweb"){
+          disabledOpt = true;
+          description="Please upload this document in the BK2 students web page.";
+        }
+
         if(this.props.action == "video"){
           disabledOpt = true;
           video = true;
@@ -143,6 +158,11 @@ export default class Detail extends Component {
         if(this.props.action == "noupload"){
           disabledOpt = true;
           description="The university will send this document once you have been accepted. Our team will keep you informed.";
+        }
+
+        if(this.props.action == "fromweb"){
+          disabledOpt = true;
+          description="Please upload this document in the BK2 students web page.";
         }
 
         if(this.props.action == "video"){
@@ -184,7 +204,7 @@ export default class Detail extends Component {
               <Body>
               <Text>{description} </Text>
               <Text> </Text>
-              <Text>{this.props.title}: {this.props.subtitle}</Text>
+              <Text>{this.props.title} {this.props.subtitle}</Text>
               
               </Body>
             </CardItem>
