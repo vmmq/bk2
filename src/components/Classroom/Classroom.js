@@ -84,17 +84,18 @@ export default class Classroom extends Component {
               key={element.id}
               title={element.title} 
               containerStyle={{ borderColor: "#2b65a6",borderWidth: 1,
-              borderRadius: 2,
+              borderRadius: 0,
      
               borderBottomWidth: 0,
               shadowColor: '#036',
               shadowOffset: { width: 0, height: 2 },
-              shadowOpacity: 0.8,
+              shadowOpacity: 0.5,
               shadowRadius: 2,
               elevation: 1,
-              marginLeft: 5,
-              marginRight: 5,
-              marginTop: 10,}}
+              marginLeft: 12,
+              marginRight: 12,
+              marginBottom: 12,
+              marginTop: 12,}}
               image={{uri: element.thumbnail}}>
               
                 <Text style={{textAlign: 'justify',marginBottom: 10}}>

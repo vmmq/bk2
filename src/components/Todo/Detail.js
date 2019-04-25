@@ -58,12 +58,6 @@ export default class Detail extends Component {
   
   
 
- 
-
-  
-
-  
- 
 
   render() {
     const { valores, isLoading } = this.state;
@@ -111,7 +105,7 @@ export default class Detail extends Component {
 
         if(this.props.action == "noupload"){
           disabledOpt = true;
-          description="The university will send this document once you have been accepted. Our team will keep you informed.";
+          description="We will receive this document in our office. Our team will keep you informed.";
         }
 
         if(this.props.action == "fromweb"){
@@ -134,7 +128,7 @@ export default class Detail extends Component {
 
         if(this.props.action == "noupload"){
           disabledOpt = true;
-          description="The university will send this document once you have been accepted. Our team will keep you informed.";
+          description="We will receive this document in our office. Our team will keep you informed.";
         }
 
         if(this.props.action == "fromweb"){
@@ -157,7 +151,7 @@ export default class Detail extends Component {
 
         if(this.props.action == "noupload"){
           disabledOpt = true;
-          description="The university will send this document once you have been accepted. Our team will keep you informed.";
+          description="We will receive this document in our office. Our team will keep you informed.";
         }
 
         if(this.props.action == "fromweb"){
@@ -204,7 +198,7 @@ export default class Detail extends Component {
               <Body>
               <Text>{description} </Text>
               <Text> </Text>
-              <Text>{this.props.title} {this.props.subtitle}</Text>
+              <Text>{this.props.title}: {this.props.subtitle}</Text>
               
               </Body>
             </CardItem>

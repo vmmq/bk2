@@ -198,7 +198,7 @@ export default class Home extends Component {
             <Title>Dashboard</Title>
             <View style={{flexDirection: 'row', flex: 1, marginTop:10}}> 
               
-              <View style={{paddingRight:10}}> 
+              <View  style={{paddingRight:10}}> 
                 <AnimatedCircularProgress
                   size={150}
                   width={15}
@@ -209,9 +209,9 @@ export default class Home extends Component {
                   arcSweepAngle={240}
                   rotation={240}
                   lineCap="round" >
-                  {(fill) => ( <Text style={styles.porcentaje}> { valores.profile }%</Text> )}
+                  {(fill) => ( <Text style={styles.porcentaje} onPress={this.goProfile.bind(this)}  > { valores.profile }%</Text> )}
                 </AnimatedCircularProgress>   
-                <Text style={styles.subtext } > Profile </Text>
+                <Text style={styles.subtext } onPress={this.goProfile.bind(this)}  > Profile </Text>
               </View>
 
               <View >  
