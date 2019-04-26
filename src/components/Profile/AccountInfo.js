@@ -164,7 +164,6 @@ const DEFAULT_QUERY = 'profile/modify/';
               <FormLabel>Phone Number </FormLabel>
               <FormInput onChangeText={(text) => this.setState({phone_number: text})} keyboardType="numeric" >{this.state.phone_number}</FormInput>
          
-
               <FormLabel>Birthdate</FormLabel>
               <FormInput onChangeText={(text) => this.setState({birthdate: text})} >{this.state.birthdate}</FormInput>
 
@@ -172,16 +171,19 @@ const DEFAULT_QUERY = 'profile/modify/';
               <FormInput onChangeText={(text) => this.setState({citizenship_primary: text})} >{this.state.citizenship_primary}</FormInput>
 
               <FormLabel>WES ID</FormLabel>
-              <FormInput onChangeText={(text) => this.setState({wes_id: text})} >{this.state.wes_id}</FormInput>
+              <FormInput editable={false}  onChangeText={(text) => this.setState({wes_id: text})} >{this.state.wes_id}</FormInput>
 
               <FormLabel>NAIA ID</FormLabel>
-              <FormInput onChangeText={(text) => this.setState({naia_id: text})} >{this.state.naia_id}</FormInput>
+              <FormInput editable={false}  onChangeText={(text) => this.setState({naia_id: text})} >{this.state.naia_id}</FormInput>
 
               <FormLabel>NCAA ID</FormLabel>
-              <FormInput onChangeText={(text) => this.setState({ncaa_id: text})} >{this.state.ncaa_id}</FormInput>
+              <FormInput editable={false} onChangeText={(text) => this.setState({ncaa_id: text})} >{this.state.ncaa_id}</FormInput>
 
               <FormLabel>Scholarship Type</FormLabel>
-              <FormInput onChangeText={(text) => this.setState({scholarship: text})} >{this.state.scholarship}</FormInput>
+              <FormInput editable={false}  onChangeText={(text) => this.setState({scholarship: text})} >{this.state.scholarship}</FormInput>
+
+              <FormLabel>Applying For</FormLabel>
+              <FormInput editable={false}>Fall 2020</FormInput>
 
               <TouchableOpacity style={styles.buttonContainer}   >   
                 <RkButton

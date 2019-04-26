@@ -2,6 +2,12 @@ import React, {Component} from 'react';
 import { List, ListItem, Thumbnail, Container, Header, Content, Footer, FooterTab, Button, Icon, Text, Left, Body, Right, Title } from 'native-base';
 import { WebView,AsyncStorage, Alert, Linking, StyleSheet, View} from 'react-native';
 import {Actions} from 'react-native-router-flux';
+
+
+import { createIconSetFromIcoMoon } from 'react-native-vector-icons';
+import fontelloConfig from '../../selection.json';
+const IconNew = createIconSetFromIcoMoon(fontelloConfig);
+
 export default class Menu extends Component {
       goHome() {
         Actions.Home();
@@ -45,7 +51,7 @@ export default class Menu extends Component {
         
 
         boton = <Button  active={selected} vertical style={style} onPress={goPage} >
-                    <Icon style={styles.white} name={icon} />
+                    <IconNew style={styles.Icon} name={icon} />
                     <Text style={styles.white} >{Name}</Text>
                   </Button>;
         return boton;
@@ -55,13 +61,13 @@ export default class Menu extends Component {
 
                 <FooterTab style={styles.footer}>
                   
-                  {this.createButton("Home","apps")}
+                  {this.createButton("Home","Home")}
 
-                  {this.createButton("To-do","list")}
+                  {this.createButton("To-do","To-do")}
 
-                  {this.createButton("News","paper")}
+                  {this.createButton("News","News")}
 
-                  {this.createButton("Profile","person")}
+                  {this.createButton("Profile","Profile")}
 
                 </FooterTab>
 
@@ -93,6 +99,11 @@ export default class Menu extends Component {
     
       white: {
         color:'#FFF', 
+      },
+      Icon: {
+        color:'#FFF', 
+        fontSize:15
+        ,
       },
       selected: {
         backgroundColor: '#df951c',

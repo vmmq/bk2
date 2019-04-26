@@ -69,6 +69,7 @@ export default class Detail extends Component {
       return <Text>Sesion iniciada en otro dispositivo</Text>;
     }
     video = false;
+    survey = false;
     switch (this.props.status) {
       case 'Accepted':
         image = require('../../images/green.png');
@@ -96,6 +97,11 @@ export default class Detail extends Component {
           
         }
 
+        if(this.props.action == "survey"){
+          disabledOpt = true;
+          
+        }
+
         break;
 
       case 'Notified':
@@ -116,7 +122,13 @@ export default class Detail extends Component {
         if(this.props.action == "video"){
           disabledOpt = true;
           video = true;
-          description="Your videos must be uploaded to our shared cloud. If you have not loaded them yet, download the instructions to do so.";
+          description="Your videos must be uploaded to our shared cloud. If you have not loaded them yet, download the instructions to do so. Once you have shared the videos with us, click the “I already shared them” button.";
+        }
+
+        if(this.props.action == "survey"){
+          disabledOpt = true;
+          survey = true;
+          description="This is an online application, that must be completed by you and your parents. Please download the instructions and your Applicant Advisor will guide you through it. Once you have applied, click the “I already applied” button.";
         }
 
         break;  
@@ -139,7 +151,13 @@ export default class Detail extends Component {
         if(this.props.action == "video"){
           disabledOpt = true;
           video = true;
-          description="Your videos must be uploaded to our shared cloud. If you have not loaded them yet, download the instructions to do so.";
+          description="Your videos must be uploaded to our shared cloud. If you have not loaded them yet, download the instructions to do so.  Once you have shared the videos with us, click the “I already shared them” button.";
+        }
+
+        if(this.props.action == "survey"){
+          disabledOpt = true;
+          survey = true;
+          description="This is an online application, that must be completed by you and your parents. Please download the instructions and your Applicant Advisor will guide you through it. Once you have applied, click the “I already applied” button.";
         }
 
         break;  
@@ -162,7 +180,13 @@ export default class Detail extends Component {
         if(this.props.action == "video"){
           disabledOpt = true;
           video = true;
-          description="Your videos must be uploaded to our shared cloud. If you have not loaded them yet, download the instructions to do so.";
+          description="Your videos must be uploaded to our shared cloud. If you have not loaded them yet, download the instructions to do so.  Once you have shared the videos with us, click the “I already shared them” button.";
+        }
+
+        if(this.props.action == "survey"){
+          disabledOpt = true;
+          survey = true;
+          description="This is an online application, that must be completed by you and your parents. Please download the instructions and your Applicant Advisor will guide you through it. Once you have applied, click the “I already applied” button.";
         }
         
         
@@ -215,6 +239,8 @@ export default class Detail extends Component {
                 </RkButton>
               </TouchableOpacity>
               }
+
+
               {video &&
               <TouchableOpacity style={styles.buttonContainer}   >   
               <RkButton
@@ -232,6 +258,28 @@ export default class Detail extends Component {
                 
               </TouchableOpacity>
               }
+
+              {survey &&
+              <TouchableOpacity style={styles.buttonContainer}   >   
+              <RkButton
+                    onPress={() => Linking.openURL('https://app.bekdos.etv.im/assets/images/api/financial_tuto_en.pdf')}
+                    style={styles.button2}
+                    contentStyle={styles.buttonIn}>
+                    View Instructions!
+                </RkButton>  
+                <RkButton
+                    onPress={() => this.shareVideo()}
+                    style={styles.button}
+                    contentStyle={styles.buttonIn}>
+                    I already applied!
+                </RkButton>
+                
+              </TouchableOpacity>
+              } 
+
+
+
+
               <TouchableOpacity style={styles.buttonContainer}  >     
                 <RkButton
                     onPress={() => this.goTodo()}
