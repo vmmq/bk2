@@ -18,6 +18,7 @@ const DEFAULT_QUERY = 'profile/upload/';
       id_number: "",
       full_name: "",
       isLoading: false,
+      lang:"EN"
     };
   }
 
@@ -26,7 +27,10 @@ const DEFAULT_QUERY = 'profile/upload/';
     this.setState({id_number: id_number_value })        
 
     full_name_value = await AsyncStorage.getItem('full_name');
-    this.setState({full_name: full_name_value })   
+    this.setState({full_name: full_name_value })  
+    
+    lang = await AsyncStorage.getItem('lang');
+    this.setState({lang: lang })
   }
 
 
@@ -89,6 +93,21 @@ const DEFAULT_QUERY = 'profile/upload/';
       }
      render(){
       const { isLoading } = this.state;
+      if (this.state.lang == 'ES') {
+        accountid = 'ID Cuenta';
+        accountinfo = "Mi Información";
+        faqs = "Preguntas Frecuentes";
+        support = "Soporte";
+        logout = "Cerrar Sesion";
+      
+      } else {
+        accountid = 'Account ID';
+        accountinfo = "Account Info";
+        faqs = "FAQ's";
+        support = "Support";
+        logout = "Logout";
+      }
+
       if (isLoading) {
         return (
           <Video 
@@ -132,7 +151,7 @@ const DEFAULT_QUERY = 'profile/upload/';
                 <View style={styles.body}>
                   <View style={styles.bodyContent}>
                     <Text style={styles.name}>{this.state.full_name}</Text>
-                    <Text style={styles.info}>Account ID: {this.state.id_number}</Text>
+                    <Text style={styles.info}>{accountid}: {this.state.id_number}</Text>
                     
                   </View>
               </View>
@@ -141,19 +160,19 @@ const DEFAULT_QUERY = 'profile/upload/';
                 
 
                 <TouchableOpacity key='profile' onPress={this.goAccountInfo.bind(this)}> 
-                        <ListItem  title='Account Info'/>
+                        <ListItem  title={accountinfo}/>
                 </TouchableOpacity>
 
                 <TouchableOpacity key='faqs' onPress={this.goFaqs.bind(this)}> 
-                        <ListItem  title='FAQs'/>
+                        <ListItem  title={faqs}/>
                 </TouchableOpacity>
 
                 <TouchableOpacity key='support' onPress={this.goSupport.bind(this)}> 
-                        <ListItem  title='Support'/>
+                        <ListItem  title={support}/>
                 </TouchableOpacity>
 
                 <TouchableOpacity key='cerrarsesion' onPress={this.userLogout.bind(this)}> 
-                        <ListItem  title='Logout'/>
+                        <ListItem  title={logout}/>
                 </TouchableOpacity>
 
 

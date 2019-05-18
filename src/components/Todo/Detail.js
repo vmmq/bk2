@@ -13,11 +13,39 @@ export default class Detail extends Component {
     super(props);
     this.goScan = this.goScan.bind(this);
 
-    this.state = {
-      valores: {step1:{},step2:{},step3:{}},
-      isLoading: false,
-      pagina: "",
-    };
+    if (this.props.lang == "ES") {
+      this.state ={ 
+        valores: {step1:{},step2:{},step3:{}},
+        isLoading: false,
+        pagina: "",
+        ScanNow:"Escanear",
+        goBack:"Volver",
+        view_inst:"Ver Instrucciones",
+        applied:"Ya aplique!",
+        shared:"Ya los comparti!",
+        step1: "Paso 1",
+        step2: "Paso 2",
+        step3: "Paso 3",
+      };
+    } else{
+      this.state = {
+        valores: {step1:{},step2:{},step3:{}},
+        isLoading: false,
+        pagina: "",
+        ScanNow:"Scan Now",
+        goBack:"Go Back",
+        view_inst:"View Instructions!",
+        applied:"I already applied!",
+        shared:"I already shared them!",
+        step1: "Step 1",
+        step2: "Step 2",
+        step3: "Step 3",
+      };
+    }
+    
+
+    
+
   }
  
   goScan() {
@@ -63,6 +91,8 @@ export default class Detail extends Component {
     const { valores, isLoading } = this.state;
     const list = valores.step1;
     spiner=true
+
+    
     
     if(valores.error){
       this.userLogout();
@@ -73,13 +103,26 @@ export default class Detail extends Component {
     switch (this.props.status) {
       case 'Accepted':
         image = require('../../images/green.png');
-        description="Done! Your requirement has been approved by our team.";
+
+        if(this.props.lang == 'ES'){
+          description="¡Listo! Tu requisito ha sido aprobado por nuestro equipo.";
+        } else {
+          description="Done! Your requirement has been approved by our team.";
+        }
+        
         disabledOpt = true;
         break;
 
       case 'Pending':
         image = require('../../images/yellow.png');
-        description="Processing! Our team is reviewing this requirement. You will know that it has been approved when it turns green.";
+
+        if(this.props.lang == 'ES'){
+          description="¡Procesando! Nuestro equipo está revisando este requisito. Sabrás que ha sido aprobado cuando se coloque de color verde.";
+        } else {
+          description="Processing! Our team is reviewing this requirement. You will know that it has been approved when it turns green.";
+        }
+
+       
         disabledOpt = false;
 
         if(this.props.action == "noupload"){
@@ -106,92 +149,184 @@ export default class Detail extends Component {
 
       case 'Notified':
         image = require('../../images/blue.png');
-        description="Place the document on a dark background and in a well-lit environment. Wait a few seconds, and go!";
+        if(this.props.lang == 'ES'){
+          description="Coloca el documento sobre un fondo oscuro y en un ambiente bien iluminado. Espera unos segundos, ¡y listo!";
+        } else {
+          description="Place the document on a dark background and in a well-lit environment. Wait a few seconds, and go!";
+        }
+
+ 
         disabledOpt = false;
 
         if(this.props.action == "noupload"){
           disabledOpt = true;
-          description="We will receive this document in our office. Our team will keep you informed.";
+
+          if(this.props.lang == 'ES'){
+            description="Nosotros recibiremos este documento en nuestra oficina. Te mantendremos informado.";
+          } else {
+            description="We will receive this document in our office. Our team will keep you informed.";
+          }
+
         }
 
         if(this.props.action == "fromweb"){
           disabledOpt = true;
-          description="Please upload this document in the BK2 students web page.";
+
+          if(this.props.lang == 'ES'){
+            description="Por favor carga este documento en la aplicación desde tu computador o laptop.";
+          } else {
+            description="Please upload this document in the BK2 students web page.";
+          }
+
         }
 
         if(this.props.action == "video"){
           disabledOpt = true;
           video = true;
-          description="Your videos must be uploaded to our shared cloud. If you have not loaded them yet, download the instructions to do so. Once you have shared the videos with us, click the “I already shared them” button.";
+
+          if(this.props.lang == 'ES'){
+            description="Tus videos los deberás cargar en nuestra nube compartida. Si no los has subido todavía, descarga el instructivo para hacerlo.";
+          } else {
+            description="Your videos must be uploaded to our shared cloud. If you have not loaded them yet, download the instructions to do so. Once you have shared the videos with us, click the “I already shared them” button.";
+          }
+
         }
 
         if(this.props.action == "survey"){
           disabledOpt = true;
           survey = true;
-          description="This is an online application, that must be completed by you and your parents. Please download the instructions and your Applicant Advisor will guide you through it. Once you have applied, click the “I already applied” button.";
+
+          if(this.props.lang == 'ES'){
+            description="Esta es una aplicación online que debe ser completada por tus padres. Descarga las instrucciones para continuar.";
+          } else {
+            description="This is an online application, that must be completed by you and your parents. Please download the instructions and your Applicant Advisor will guide you through it. Once you have applied, click the “I already applied” button.";
+          }
+
         }
 
         break;  
 
       case 'Declined':
         image = require('../../images/red.png');
-        description="Place the document on a dark background and in a well-lit environment. Wait a few seconds, and go!";
+
+        if(this.props.lang == 'ES'){
+          description="Coloca el documento sobre un fondo oscuro y en un ambiente bien iluminado. Espera unos segundos, ¡y listo!";
+        } else {
+          description="Place the document on a dark background and in a well-lit environment. Wait a few seconds, and go!";
+        }
+
+
         disabledOpt = false;
 
         if(this.props.action == "noupload"){
           disabledOpt = true;
-          description="We will receive this document in our office. Our team will keep you informed.";
+
+          if(this.props.lang == 'ES'){
+            description="Nosotros recibiremos este documento en nuestra oficina. Te mantendremos informado.";
+          } else {
+            description="We will receive this document in our office. Our team will keep you informed.";
+          }
+
         }
 
         if(this.props.action == "fromweb"){
           disabledOpt = true;
-          description="Please upload this document in the BK2 students web page.";
+
+          if(this.props.lang == 'ES'){
+            description="Por favor carga este documento en la aplicación desde tu computador o laptop.";
+          } else {
+            description="Please upload this document in the BK2 students web page.";
+          }
+
         }
 
         if(this.props.action == "video"){
           disabledOpt = true;
           video = true;
-          description="Your videos must be uploaded to our shared cloud. If you have not loaded them yet, download the instructions to do so.  Once you have shared the videos with us, click the “I already shared them” button.";
+
+          if(this.props.lang == 'ES'){
+            description="Tus videos los deberás cargar en nuestra nube compartida. Si no los has subido todavía, descarga el instructivo para hacerlo.";
+          } else {
+            description="Your videos must be uploaded to our shared cloud. If you have not loaded them yet, download the instructions to do so.  Once you have shared the videos with us, click the “I already shared them” button.";
+          }
+
         }
 
         if(this.props.action == "survey"){
           disabledOpt = true;
           survey = true;
-          description="This is an online application, that must be completed by you and your parents. Please download the instructions and your Applicant Advisor will guide you through it. Once you have applied, click the “I already applied” button.";
+
+          if(this.props.lang == 'ES'){
+            description="Esta es una aplicación online que debe ser completada por tus padres. Descarga las instrucciones para continuar.";
+          } else {
+            description="This is an online application, that must be completed by you and your parents. Please download the instructions and your Applicant Advisor will guide you through it. Once you have applied, click the “I already applied” button.";
+          }
+
         }
 
         break;  
     
       default:
         image = require('../../images/red.png');
-        description="Place the document on a dark background and in a well-lit environment. Wait a few seconds, and go!";
+
+        if(this.props.lang == 'ES'){
+          description="Coloca el documento sobre un fondo oscuro y en un ambiente bien iluminado. Espera unos segundos, ¡y listo!";
+        } else {
+          description="Place the document on a dark background and in a well-lit environment. Wait a few seconds, and go!";
+        }
+
         disabledOpt = false;
 
         if(this.props.action == "noupload"){
           disabledOpt = true;
-          description="We will receive this document in our office. Our team will keep you informed.";
+
+          if(this.props.lang == 'ES'){
+            description="Nosotros recibiremos este documento en nuestra oficina. Te mantendremos informado.";
+          } else {
+            description="We will receive this document in our office. Our team will keep you informed.";
+          }
+
         }
 
         if(this.props.action == "fromweb"){
           disabledOpt = true;
-          description="Please upload this document in the BK2 students web page.";
+
+          if(this.props.lang == 'ES'){
+            description="Por favor carga este documento en la aplicación desde tu computador o laptop.";
+          } else {
+            description="Please upload this document in the BK2 students web page.";
+          }
+
         }
 
         if(this.props.action == "video"){
           disabledOpt = true;
           video = true;
-          description="Your videos must be uploaded to our shared cloud. If you have not loaded them yet, download the instructions to do so.  Once you have shared the videos with us, click the “I already shared them” button.";
+
+          if(this.props.lang == 'ES'){
+            description="Tus videos los deberás cargar en nuestra nube compartida. Si no los has subido todavía, descarga el instructivo para hacerlo.";
+          } else {
+            description="Your videos must be uploaded to our shared cloud. If you have not loaded them yet, download the instructions to do so.  Once you have shared the videos with us, click the “I already shared them” button.";
+          }
+
         }
 
         if(this.props.action == "survey"){
           disabledOpt = true;
           survey = true;
+
+          if(this.props.lang == 'ES'){
+          description="Esta es una aplicación online que debe ser completada por tus padres. Descarga las instrucciones para continuar.";
+        } else {
           description="This is an online application, that must be completed by you and your parents. Please download the instructions and your Applicant Advisor will guide you through it. Once you have applied, click the “I already applied” button.";
+        }
         }
         
         
         
+
         break;
+
     }
 
    
@@ -235,7 +370,7 @@ export default class Detail extends Component {
                     style={styles.button}
                     contentStyle={styles.buttonIn}
                     disabled={disabledOpt}>
-                    Scan Now
+                    {this.state.ScanNow}
                 </RkButton>
               </TouchableOpacity>
               }
@@ -244,16 +379,16 @@ export default class Detail extends Component {
               {video &&
               <TouchableOpacity style={styles.buttonContainer}   >   
               <RkButton
-                    onPress={() => Linking.openURL('https://app.bekdos.etv.im/assets/images/api/video_tuto_en.pdf')}
+                    onPress={() => Linking.openURL('https://app.bekdos.etv.im/assets/images/api/video_tuto_'+this.props.lang.toLowerCase()+'.pdf')}
                     style={styles.button2}
                     contentStyle={styles.buttonIn}>
-                    View Instructions!
+                    {this.state.view_inst}
                 </RkButton>  
                 <RkButton
                     onPress={() => this.shareVideo()}
                     style={styles.button}
                     contentStyle={styles.buttonIn}>
-                    I already shared them!
+                    {this.state.shared}
                 </RkButton>
                 
               </TouchableOpacity>
@@ -262,16 +397,16 @@ export default class Detail extends Component {
               {survey &&
               <TouchableOpacity style={styles.buttonContainer}   >   
               <RkButton
-                    onPress={() => Linking.openURL('https://app.bekdos.etv.im/assets/images/api/financial_tuto_en.pdf')}
+                    onPress={() => Linking.openURL('https://app.bekdos.etv.im/assets/images/api/financial_tuto_'+this.props.lang.toLowerCase()+'.pdf')}
                     style={styles.button2}
                     contentStyle={styles.buttonIn}>
-                    View Instructions!
+                    {this.state.view_inst}
                 </RkButton>  
                 <RkButton
                     onPress={() => this.shareVideo()}
                     style={styles.button}
                     contentStyle={styles.buttonIn}>
-                    I already applied!
+                    {this.state.applied}
                 </RkButton>
                 
               </TouchableOpacity>
@@ -285,7 +420,7 @@ export default class Detail extends Component {
                     onPress={() => this.goTodo()}
                     style={styles.button2}
                     contentStyle={styles.buttonIn}>
-                    Go Back
+                    {this.state.goBack}
                 </RkButton>
               </TouchableOpacity>
        

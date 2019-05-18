@@ -23,6 +23,7 @@ export default class Todo extends Component {
       valores: {step1:{},step2:{},step3:{}},
       isLoading: false,
       pagina: "",
+      lang: "",
     };
   }
  
@@ -32,7 +33,7 @@ export default class Todo extends Component {
   }
 
   goDetail(element) {
-    Actions.Detail({key_file: element.name, title: element.title, subtitle: element.subtitle, status: element.status, action: element.action});
+    Actions.Detail({key_file: element.name, title: element.title, subtitle: element.subtitle, status: element.status, action: element.action,lang: this.state.lang});
    
   }
 
@@ -54,6 +55,8 @@ export default class Todo extends Component {
   componentDidMount = async () => {
     this.setState({ isLoading: true });
     token = await AsyncStorage.getItem('id_token');
+    lang = await AsyncStorage.getItem('lang');
+    this.setState({lang: lang })
     fetch(API + DEFAULT_QUERY,{
         method: 'POST',
         headers: {
@@ -128,6 +131,20 @@ export default class Todo extends Component {
     const { valores, isLoading } = this.state;
     const list = valores.step1;
     spiner=true
+
+    if (this.state.lang == 'ES') {
+
+      step1 = "Paso 1";
+      step2 = "Paso 2";
+      step3 = "Paso 3";
+  
+    } else {
+
+      step1 = "Step 1";
+      step2 = "Step 2";
+      step3 = "Step 3";
+
+    }
     
     if(valores.error){
       this.userLogout();
@@ -174,7 +191,7 @@ export default class Todo extends Component {
             <Right />
         </Header>
         <Content>     
-        <Text style={styles.subtext} >Step 1</Text>
+        <Text style={styles.subtext}> {step1}</Text>
         <View style={styles.container} >
         <Progress.Bar progress={valores.completed_1} width={200} style={styles.progress} />
         </View>
@@ -182,7 +199,7 @@ export default class Todo extends Component {
           {this.PrintStep(valores.step1)}
         </List>
 
-        <Text style={styles.subtext} >Step 2</Text>
+        <Text style={styles.subtext} >{step2}</Text>
         <View style={styles.container} >
         <Progress.Bar progress={valores.completed_2} width={200} style={styles.progress} />
         </View>
@@ -190,7 +207,7 @@ export default class Todo extends Component {
         {this.PrintStep(valores.step2)}
         </List>
 
-        <Text style={styles.subtext} >Step 3</Text>
+        <Text style={styles.subtext} >{step3}</Text>
         <View style={styles.container} >
         <Progress.Bar progress={valores.completed_3} width={200} style={styles.progress} />
         </View>

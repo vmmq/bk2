@@ -22,6 +22,7 @@ export default class Classroom extends Component {
       valores: {news:{},featured:{}},
       isLoading: false,
       pagina: "",
+      lang:"",
     };
   }
  
@@ -53,6 +54,8 @@ export default class Classroom extends Component {
   componentDidMount = async () => {
     this.setState({ isLoading: true });
     token = await AsyncStorage.getItem('id_token');
+    lang = await AsyncStorage.getItem('lang');
+    this.setState({lang: lang })
     fetch(API + DEFAULT_QUERY,{
         method: 'POST',
         headers: {
@@ -69,6 +72,15 @@ export default class Classroom extends Component {
   }
 
   PrintStep(stepContent) {
+    if (this.state.lang == 'ES') {
+      readmore = 'Continuar Leyendo';
+      
+    } else {
+      readmore = 'Read More';
+      
+      
+    }
+
     console.log('step: ' + stepContent)
     const { valores, isLoading } = this.state;
     var lista = [];
@@ -107,7 +119,7 @@ export default class Classroom extends Component {
                     onPress={() => Linking.openURL(element.url) }
                     backgroundColor='#2b65a6'
                     buttonStyle={{borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 0}}
-                    title='Read More' />
+                    title={readmore} />
                 </TouchableOpacity>
               </Card>
               
@@ -132,6 +144,9 @@ export default class Classroom extends Component {
       this.userLogout();
       return <Text>Sesion iniciada en otro dispositivo</Text>;
     }
+
+    
+
 
     if (isLoading) {
       return <Container>

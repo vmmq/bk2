@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import { StyleSheet, View, Text, Image, KeyboardAvoidingView, Dimensions, ImageBackground} from 'react-native';
 import LoginForm from './LoginForm';
 import Onboarding from 'react-native-onboarding-swiper';
-
+import PushController from './PushController'; 
 
  export default class Login extends Component {
     constructor(props) {
@@ -25,6 +25,7 @@ import Onboarding from 'react-native-onboarding-swiper';
                 <View style={styles.formContainer} >
                     <LoginForm />
                 </View>
+                <PushController/>
              </KeyboardAvoidingView>
       
          );

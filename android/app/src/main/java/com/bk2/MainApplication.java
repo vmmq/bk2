@@ -3,15 +3,7 @@ package com.bk2;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
-import com.inprogress.reactnativeyoutube.ReactNativeYouTube;
-import com.oblador.vectoricons.VectorIconsPackage;
-import com.rnfs.RNFSPackage;
-import fr.bamlab.rnimageresizer.ImageResizerPackage;
-import com.imagepicker.ImagePickerPackage;
-import com.reactlibrary.RNPdfScannerPackage;
-import com.brentvatne.react.ReactVideoPackage;
-import com.swmansion.gesturehandler.react.RNGestureHandlerPackage;
-import com.horcrux.svg.SvgPackage;
+import com.dieam.reactnativepushnotification.ReactNativePushNotificationPackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
@@ -32,15 +24,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
-            new ReactNativeYouTube(),
-            new VectorIconsPackage(),
-            new RNFSPackage(),
-            new ImageResizerPackage(),
-            new ImagePickerPackage(),
-            new RNPdfScannerPackage(),
-            new ReactVideoPackage(),
-            new RNGestureHandlerPackage(),
-            new SvgPackage()
+            new ReactNativePushNotificationPackage()
       );
     }
 

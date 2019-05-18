@@ -8,7 +8,18 @@ import Menu from '../Menu/Menu';
 
 
  export default class Classroom extends Component {
-  
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      lang:"",
+    };
+  }
+
+  componentDidMount = async () => {
+    lang = await AsyncStorage.getItem('lang');
+    this.setState({lang: lang })
+  }
       goProfile() {
         Actions.Profile();  
       }
@@ -25,6 +36,15 @@ import Menu from '../Menu/Menu';
         }
       }
      render(){
+      if (this.state.lang == 'ES') {
+        usa = 'Soporte USA';
+        int = "Soporte Internacional";
+      
+      } else {
+        usa = 'USA Support';
+        int = "International Support";
+       
+      }
          return(
             <Container>
             <Header style={styles.header}>
@@ -44,12 +64,12 @@ import Menu from '../Menu/Menu';
               <List >
                 <TouchableOpacity key='usa' onPress={() => Linking.openURL('mailto:seguimiento1@bk2usa.com') }
       title="seguimiento1@bk2usa.com"> 
-                        <ListItem  title='USA Support'/>
+                        <ListItem  title={usa}/>
                 </TouchableOpacity>
 
                 <TouchableOpacity key='inter' onPress={() => Linking.openURL('mailto:seguimiento@bk2usa.com') }
       title="seguimiento@bk2usa.com"> 
-                        <ListItem  title='International Support'/>
+                        <ListItem  title={int}/>
                 </TouchableOpacity>
 
                 

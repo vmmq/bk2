@@ -24,6 +24,7 @@ export default class Home extends Component {
       valores: {profile:0,step1:0,step2:0,step3:0},
       isLoading: false,
       isDone:'true',
+      lang:"",
     };
   }
 
@@ -70,6 +71,9 @@ export default class Home extends Component {
     is_done = await AsyncStorage.getItem('isDone');
     this.setState({isDone: is_done })
 
+    lang = await AsyncStorage.getItem('lang');
+    this.setState({lang: lang })
+
     token = await AsyncStorage.getItem('id_token');
 
 
@@ -95,6 +99,22 @@ export default class Home extends Component {
     spiner=true
     if(valores.error){
       this.userLogout();
+    }
+
+    if (this.state.lang == 'ES') {
+      dashboard = 'Tablero';
+      news = "Noticias e Información";
+      step1 = "Paso 1";
+      step2 = "Paso 2";
+      step3 = "Paso 3";
+      profile ="Perfil";
+    } else {
+      dashboard = 'Dashboard';
+      news = "News & Info";
+      step1 = "Step 1";
+      step2 = "Step 2";
+      step3 = "Step 3";
+      profile ="Profile";
     }
 
     if (this.state.isDone == 'false') {
@@ -195,7 +215,10 @@ export default class Home extends Component {
             <View style={styles.container} >
             
             
-            <Title>Dashboard</Title>
+            <Title>
+            {dashboard}
+              
+              </Title>
             <View style={{flexDirection: 'row', flex: 1, marginTop:10}}> 
               
               <View  style={{paddingRight:10}}> 
@@ -211,7 +234,7 @@ export default class Home extends Component {
                   lineCap="round" >
                   {(fill) => ( <Text style={styles.porcentaje} onPress={this.goProfile.bind(this)}  > { valores.profile }%</Text> )}
                 </AnimatedCircularProgress>   
-                <Text style={styles.subtext } onPress={this.goProfile.bind(this)}  > Profile </Text>
+                <Text style={styles.subtext } onPress={this.goProfile.bind(this)}  > {profile } </Text>
               </View>
 
               <View >  
@@ -227,7 +250,7 @@ export default class Home extends Component {
                   lineCap="round" >
                   {(fill) => ( <Text style={styles.porcentaje} onPress={this.goTodo.bind(this)}> { valores.step1 }% </Text>)}
                 </AnimatedCircularProgress>   
-                <Text style={styles.subtext} onPress={this.goTodo.bind(this)}> Step 1 </Text>
+                <Text style={styles.subtext} onPress={this.goTodo.bind(this)}> {step1} </Text>
               </View>
 
             </View>
@@ -246,7 +269,7 @@ export default class Home extends Component {
                   lineCap="round" >
                   {(fill) => ( <Text style={styles.porcentaje} onPress={this.goTodo.bind(this)}> { valores.step2 }% </Text> )}
                 </AnimatedCircularProgress>   
-                <Text style={styles.subtext} onPress={this.goTodo.bind(this)}> Step 2 </Text>
+                <Text style={styles.subtext} onPress={this.goTodo.bind(this)}> {step2} </Text>
               </View>
 
               <View> 
@@ -262,10 +285,13 @@ export default class Home extends Component {
                   lineCap="round" >
                   {(fill) => ( <Text style={styles.porcentaje} onPress={this.goTodo.bind(this)}> { valores.step3 }% </Text> )}
                 </AnimatedCircularProgress>   
-                <Text style={styles.subtext} onPress={this.goTodo.bind(this)} > Step 3 </Text>
+                <Text style={styles.subtext} onPress={this.goTodo.bind(this)} > {step3} </Text>
               </View>
             </View> 
-            <Title>News & Info</Title>
+            <Title>
+       
+            {news}
+            </Title>
             <Slider></Slider>
             </View>
           </Content>

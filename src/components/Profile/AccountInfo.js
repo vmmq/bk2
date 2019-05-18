@@ -23,6 +23,8 @@ const DEFAULT_QUERY = 'profile/modify/';
       wes_id:" ",
       naia_id:" ",
       ncaa_id:" ",
+      applying_for: "",
+      lang:"",
     };
   }
 
@@ -102,6 +104,10 @@ const DEFAULT_QUERY = 'profile/modify/';
       }
 
       componentDidMount = async () => {
+
+        lang = await AsyncStorage.getItem('lang');
+        this.setState({lang: lang })
+
         id_number_value = await AsyncStorage.getItem('id_number');
         this.setState({id_number: id_number_value })    
         
@@ -132,10 +138,41 @@ const DEFAULT_QUERY = 'profile/modify/';
         ncaa_id = await AsyncStorage.getItem('ncaa_id');
         this.setState({ncaa_id: ncaa_id })   
 
+        applying_for = await AsyncStorage.getItem('applying_for');
+        this.setState({applying_for: applying_for }) 
+
 
       }
       
      render(){
+      if (this.state.lang == 'ES') {
+        name = 'Nombre y Apellido';
+        email = "Email";
+        phone = "Numero de Telefono";
+        birthdate = "Cumpleaños";
+        cityzenship = "Ciudadania";
+        wes ="Recibo de evaluación de credenciales";
+        naia ="NAIA";
+        ncaa ="NCAA";
+        scholarship ="Tipo de Beca";
+        applyfor ="Periodo";
+        goback="Regresar";
+        
+
+      } else {
+        name = 'Full Name';
+        email = "Email";
+        phone = "Phone Number";
+        birthdate = "Birtdate";
+        cityzenship = "Citizenship";
+        wes ="Credential Evaluation Voucher";
+        naia ="NAIA";
+        ncaa ="NCAA";
+        scholarship ="Scholarship Type";
+        applyfor ="Apply For";
+        goback="Go Back";
+      }
+
          return(
             <Container>
             <Header style={styles.header}>
@@ -153,44 +190,44 @@ const DEFAULT_QUERY = 'profile/modify/';
               </Header>
               <Content>     
              
-              <FormLabel>Full Name</FormLabel>
-              <FormInput onChangeText={(text) => this.setState({full_name: text})}>
+              <FormLabel>{name}</FormLabel>
+              <FormInput editable={false}  onChangeText={(text) => this.setState({full_name: text})}>
                 {this.state.full_name}
               </FormInput>
 
-              <FormLabel>Email</FormLabel>
-              <FormInput onChangeText={(text) => this.setState({email: text})}>{this.state.email}</FormInput>
+              <FormLabel>{email}</FormLabel>
+              <FormInput editable={false}  onChangeText={(text) => this.setState({email: text})}>{this.state.email}</FormInput>
 
-              <FormLabel>Phone Number </FormLabel>
-              <FormInput onChangeText={(text) => this.setState({phone_number: text})} keyboardType="numeric" >{this.state.phone_number}</FormInput>
+              <FormLabel>{phone}</FormLabel>
+              <FormInput editable={false}  onChangeText={(text) => this.setState({phone_number: text})} keyboardType="numeric" >{this.state.phone_number}</FormInput>
          
-              <FormLabel>Birthdate</FormLabel>
-              <FormInput onChangeText={(text) => this.setState({birthdate: text})} >{this.state.birthdate}</FormInput>
+              <FormLabel>{birthdate}</FormLabel>
+              <FormInput editable={false}  onChangeText={(text) => this.setState({birthdate: text})} >{this.state.birthdate}</FormInput>
 
-              <FormLabel>Citizenship</FormLabel>
-              <FormInput onChangeText={(text) => this.setState({citizenship_primary: text})} >{this.state.citizenship_primary}</FormInput>
+              <FormLabel>{cityzenship}</FormLabel>
+              <FormInput editable={false}  onChangeText={(text) => this.setState({citizenship_primary: text})} >{this.state.citizenship_primary}</FormInput>
 
-              <FormLabel>WES ID</FormLabel>
+              <FormLabel>{wes}</FormLabel>
               <FormInput editable={false}  onChangeText={(text) => this.setState({wes_id: text})} >{this.state.wes_id}</FormInput>
 
-              <FormLabel>NAIA ID</FormLabel>
+              <FormLabel>{naia}</FormLabel>
               <FormInput editable={false}  onChangeText={(text) => this.setState({naia_id: text})} >{this.state.naia_id}</FormInput>
 
-              <FormLabel>NCAA ID</FormLabel>
+              <FormLabel>{ncaa}</FormLabel>
               <FormInput editable={false} onChangeText={(text) => this.setState({ncaa_id: text})} >{this.state.ncaa_id}</FormInput>
 
-              <FormLabel>Scholarship Type</FormLabel>
+              <FormLabel>{scholarship}e</FormLabel>
               <FormInput editable={false}  onChangeText={(text) => this.setState({scholarship: text})} >{this.state.scholarship}</FormInput>
 
-              <FormLabel>Applying For</FormLabel>
-              <FormInput editable={false}>Fall 2020</FormInput>
+              <FormLabel>{applyfor}</FormLabel>
+              <FormInput editable={false}  onChangeText={(text) => this.setState({applying_for: text})} >{this.state.applying_for}</FormInput>
 
               <TouchableOpacity style={styles.buttonContainer}   >   
                 <RkButton
                     onPress={() => this.loadInfo()}
                     style={styles.button}
                     contentStyle={styles.buttonIn}>
-                    Save!
+                    {goback}
                 </RkButton>
                 
               </TouchableOpacity>

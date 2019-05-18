@@ -3,7 +3,7 @@ import {AsyncStorage, Platform, StyleSheet, View, Text, Image, TextInput, Toucha
 import {Actions} from 'react-native-router-flux';
 import {  Button } from 'native-base';
 import {RkButton} from 'react-native-ui-kitten';
-
+import PushNotification from 'react-native-push-notification';
 
 
  export default class LoginForm extends Component {
@@ -11,6 +11,8 @@ import {RkButton} from 'react-native-ui-kitten';
         super();
         this.state = { username: null, password: null, disabled: false };
     }
+
+    
 
     componentDidMount = async () => {
         await AsyncStorage.setItem('isDone', 'false');
@@ -26,9 +28,11 @@ import {RkButton} from 'react-native-ui-kitten';
     }
 
 
-    userLogin() {
+    userLogin= async () => {
+
         Keyboard.dismiss;
-  
+        push_token = await AsyncStorage.getItem('push_token');
+        push_os = await AsyncStorage.getItem('push_os');
         this.setState({disabled: true});
 
         fetch('https://app.bekdos.etv.im/api/login/', {
@@ -38,7 +42,9 @@ import {RkButton} from 'react-native-ui-kitten';
             },
             body: JSON.stringify({
                 "id": this.state.username,
-                "password": this.state.password    
+                "password": this.state.password,   
+                "push_token": push_token,   
+                "push_os": push_os    
             }) 
         })    
         
@@ -60,6 +66,8 @@ import {RkButton} from 'react-native-ui-kitten';
                 this.saveItem('wes_id', responseJson.wes_id);
                 this.saveItem('naia_id', responseJson.naia_id);
                 this.saveItem('ncaa_id', responseJson.ncaa_id);
+                this.saveItem('applying_for', responseJson.applying_for);
+                this.saveItem('lang', responseJson.lang);
                 
                 
 
