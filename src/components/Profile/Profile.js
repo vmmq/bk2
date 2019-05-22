@@ -98,7 +98,7 @@ const DEFAULT_QUERY = 'profile/upload/';
         accountinfo = "Mi Información";
         faqs = "Preguntas Frecuentes";
         support = "Soporte";
-        logout = "Cerrar Sesion";
+        logout = "Cerrar Sesión";
       
       } else {
         accountid = 'Account ID';

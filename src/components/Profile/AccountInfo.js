@@ -148,9 +148,9 @@ const DEFAULT_QUERY = 'profile/modify/';
       if (this.state.lang == 'ES') {
         name = 'Nombre y Apellido';
         email = "Email";
-        phone = "Numero de Telefono";
+        phone = "Número de teléfono";
         birthdate = "Cumpleaños";
-        cityzenship = "Ciudadania";
+        cityzenship = "Ciudadanía";
         wes ="Recibo de evaluación de credenciales";
         naia ="NAIA";
         ncaa ="NCAA";
@@ -163,7 +163,7 @@ const DEFAULT_QUERY = 'profile/modify/';
         name = 'Full Name';
         email = "Email";
         phone = "Phone Number";
-        birthdate = "Birtdate";
+        birthdate = "Birthdate";
         cityzenship = "Citizenship";
         wes ="Credential Evaluation Voucher";
         naia ="NAIA";
@@ -216,7 +216,7 @@ const DEFAULT_QUERY = 'profile/modify/';
               <FormLabel>{ncaa}</FormLabel>
               <FormInput editable={false} onChangeText={(text) => this.setState({ncaa_id: text})} >{this.state.ncaa_id}</FormInput>
 
-              <FormLabel>{scholarship}e</FormLabel>
+              <FormLabel>{scholarship}</FormLabel>
               <FormInput editable={false}  onChangeText={(text) => this.setState({scholarship: text})} >{this.state.scholarship}</FormInput>
 
               <FormLabel>{applyfor}</FormLabel>

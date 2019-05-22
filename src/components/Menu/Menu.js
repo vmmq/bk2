@@ -8,6 +8,11 @@ import { createIconSetFromIcoMoon } from 'react-native-vector-icons';
 import fontelloConfig from '../../selection.json';
 const IconNew = createIconSetFromIcoMoon(fontelloConfig);
 
+
+const API = 'https://app.bekdos.etv.im/api/';
+const DEFAULT_QUERY = 'account_info/';
+
+
 export default class Menu extends Component {
       goHome() {
         Actions.Home();
@@ -21,6 +26,51 @@ export default class Menu extends Component {
       goClassroom() {
         Actions.Classroom();  
       }
+
+      async saveItem(item, selectedValue) {
+        try {
+          await AsyncStorage.setItem(item, selectedValue);
+        } catch (error) {
+          console.error('AsyncStorage error: ' + error.message);
+        }
+    }
+
+
+
+      componentDidMount = async () => {
+        token = await AsyncStorage.getItem('id_token');
+        fetch(API + DEFAULT_QUERY,{
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                "token": token
+            }) 
+        }) 
+        .then((response) => response.json())
+        .then((responseJson) => {    
+            if(responseJson) {         
+                this.saveItem('id_number', responseJson.id_number);
+                this.saveItem('email', responseJson.email);
+                this.saveItem('full_name', responseJson.full_name);
+                this.saveItem('user_role', responseJson.user_role);
+                this.saveItem('phone_number', responseJson.phone_number);
+                this.saveItem('birthdate', responseJson.birthdate);
+                this.saveItem('citizenship_primary', responseJson.citizenship_primary);
+                this.saveItem('scholarship', responseJson.scholarship);
+                this.saveItem('wes_id', responseJson.wes_id);
+                this.saveItem('naia_id', responseJson.naia_id);
+                this.saveItem('ncaa_id', responseJson.ncaa_id);
+                this.saveItem('applying_for', responseJson.applying_for);
+                this.saveItem('lang', responseJson.lang);
+            }        
+        })
+          .catch( err => this.setState({isLoading: false }));
+          
+      }
+
+
 
      
 
